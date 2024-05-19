@@ -1,0 +1,1 @@
+deb [arch=amd64 signed-by=/usr/share/keyrings/termius-2023.gpg,/usr/share/keyrings/termius-2026.gpg] https://deb.termius.com squeeze main

@@ -1,0 +1,3 @@
+# Uncomment these lines to try the beta version of the Steam launcher
+#deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ beta steam
+#deb-src [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ beta steam

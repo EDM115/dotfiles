@@ -1,0 +1,5 @@
+cargo-cache
+cargo-edit
+cargo-update
+git-delta
+zellij
