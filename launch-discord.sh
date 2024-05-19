@@ -57,7 +57,7 @@ do
         sleep 2
 
         # Call updater script with the new version and restart discord
-        sudo ~/upgrade-discord.sh -v $version -b $build -bd $betterdiscord -u $user | while read update_line
+        sudo ~/Documents/upgrade-discord.sh -v $version -b $build -bd $betterdiscord -u $user | while read update_line
         do
             if [[ "$update_line" == *"Done !"* ]]; then
                 eval "$launchcommand" &

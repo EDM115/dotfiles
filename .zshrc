@@ -1,6 +1,6 @@
 export EDITOR='nano'
 export NVM_DIR="$HOME/.nvm"
-export PATH=~/.console-ninja/.bin:/home/edm115/.local/bin:$PATH
+export PATH=~/.console-ninja/.bin:~/.local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
 HISTDUP=erase
@@ -47,7 +47,7 @@ alias apt="apt-fast"
 alias apt-get="apt-fast"
 alias cln="sudo apt-fast autoremove && sudo apt-fast clean && brew cleanup && pip cache purge && npm cache clean --force && cargo cache -a && flatpak uninstall --unused"
 alias cls="clear"
-alias discord="sudo /home/edm115/Documents/launch-discord.sh -b ptb -bd true -u $(whoami)"
+alias discord="sudo ~/Documents/launch-discord.sh -b ptb -bd true -u $(whoami)"
 alias ls="ls -Ahosp --color=always --group-directories-first"
 alias nano="nano -Scim --tabsize=2 --fill=-2"
 alias upd="sudo apt-fast update && sudo apt-fast upgrade && brew update && brew upgrade && npm update -g && gh extension upgrade --all && rustup update && cargo install-update -a && sudo snap refresh && sudo flatpak update"
