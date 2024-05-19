@@ -3,14 +3,15 @@ My config files
 
 ## Linux
 
+Files :
 - [.zshrc](.zshrc) : Zsh configuration file. Includes : Oh My Zsh, Oh My Posh, fzf, zoxide and more
 - [apt-fast.conf](apt-fast.conf) : Apt-fast configuration file
 - [apt.txt](apt.txt) : List of apt packages. May contain extra libs
 - [flatpak.txt](flatpak.txt) : List of flatpak packages
 - [homebrew.txt](homebrew.txt) : List of Homebrew packages
 - [launch-discord.sh](launch-discord.sh) & [upgrade-discord.sh](upgrade-discord.sh) : Scripts to launch and upgrade Discord ([source](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5))
-  
-  
+
+Folders :
 - [apt/sources.list.d/](apt/sources.list.d/) : Sources list for apt
 - [grub_theme/](grub_theme/) : Custom GRUB theme
 - [omp/](omp/) : Oh My Posh themes ([source](https://github.com/EDM115/EDM115-ohmyposh-theme))
