@@ -1,5 +1,6 @@
 [alias]
-    fpush = push
+    fpush = push --force-with-lease
+	push = push --progress
 [branch]
     sort = -committerdate
 [column]

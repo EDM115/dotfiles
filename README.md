@@ -1,5 +1,6 @@
 # dotfiles
-My config files
+My config files  
+Also containing some scripts and lists of packages, used to setup back my environment
 
 ## Linux
 
