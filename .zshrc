@@ -55,7 +55,7 @@ alias discord="sudo ~/Documents/launch-discord.sh -b ptb -bd true -u $(whoami)"
 alias ls="ls -Ahosp --color=always --group-directories-first"
 alias nano="nano -Scim --tabsize=2 --fill=-2"
 alias upd="sudo apt-fast update && sudo apt-fast upgrade && brew update && brew upgrade && npm update -g && gh extension upgrade --all && rustup update && cargo install-update -a && sudo snap refresh && sudo flatpak update"
-alias upd-extra="omz update && sudo curl -s https://ohmyposh.dev/install.sh | sudo bash -s && bash <(curl -sSL https://spotx-official.github.io/run.sh) -dhp --installdeb"
+alias upd-extra="sudo curl -s https://ohmyposh.dev/install.sh | sudo bash -s && bash <(curl -sSL https://spotx-official.github.io/run.sh) -dhp --installdeb && omz update"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
