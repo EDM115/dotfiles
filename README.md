@@ -1,8 +1,9 @@
-# dotfiles
+# `EDM115/dotfiles`
 My config files  
-Also containing some scripts and lists of packages, used to setup back my environment
+Also containing some scripts and lists of packages, used to setup back my environment  
+More info on [REINSTALL.md](./REINSTALL.md)
 
-## Linux
+## Linux :penguin:
 
 Files :
 - [.zshrc](.zshrc) : Zsh configuration file. Includes : Oh My Zsh, Oh My Posh, fzf, zoxide and more
@@ -16,14 +17,14 @@ Folders :
 - [apt/sources.list.d/](apt/sources.list.d/) : Sources list for apt
 - [grub_theme/](grub_theme/) : Custom GRUB theme
 
-## Windows
+## Windows :window:
 
 Files :
 - [dracula.ps1](dracula.ps1) : Dracula colorscheme for [Terminal-Icons](https://github.com/devblackops/Terminal-Icons)
 - [Microsoft.PowerShell_profile.ps1](Microsoft.PowerShell_profile.ps1) : PowerShell profile. Includes : Oh My Posh, Terminal-Icons, Github Copilot, hcloud, [sudo-like](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed) and more
 - [powershell.config.json](powershell.config.json) : PowerShell configuration file
 
-## Both
+## Both :nerd_face:
 
 Files :
 - [.gitconfig](.gitconfig) : Git configuration file
