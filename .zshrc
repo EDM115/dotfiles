@@ -52,6 +52,7 @@ alias apt-get="apt-fast"
 alias cln="sudo apt-fast autoremove && sudo apt-fast clean && brew cleanup && pip cache purge && npm cache clean --force && cargo cache -a && flatpak uninstall --unused"
 alias cls="clear"
 alias discord="sudo ~/Documents/launch-discord.sh -b ptb -bd true -u $(whoami)"
+alias git-pulls='for d in ./*/; do (cd "$d" && git pull); done'
 alias ls="ls -Ahosp --color=always --group-directories-first"
 alias nano="nano -Scim --tabsize=2 --fill=-2"
 alias upd="sudo apt-fast update && sudo apt-fast upgrade && brew update && brew upgrade && npm update -g && gh extension upgrade --all && rustup update && cargo install-update -a && sudo snap refresh && sudo flatpak update"
