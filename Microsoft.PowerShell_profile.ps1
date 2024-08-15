@@ -381,6 +381,17 @@ function sudo {
     Start-Process pwsh -ArgumentList @("-ExecutionPolicy", "Bypass", "-EncodedCommand", $encodedCommand) -Verb RunAs
 }
 
+# git-pulls
+function git-pulls {
+    Get-ChildItem -Directory | ForEach-Object {
+        if (Test-Path "$($_.FullName)\.git") {
+            Set-Location $_.FullName
+            git pull
+        }
+    }
+    cd ..
+}
+
 #34de4b3d-13a8-4540-b76d-b9e8d3851756 PowerToys CommandNotFound module
 
 Import-Module "D:\EDM115\Programmes\PowerToys\WinUI3Apps\..\WinGetCommandNotFound.psd1"
