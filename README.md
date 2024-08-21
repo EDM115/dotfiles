@@ -23,13 +23,15 @@ Files :
 - [dracula.ps1](dracula.ps1) : Dracula colorscheme for [Terminal-Icons](https://github.com/devblackops/Terminal-Icons)
 - [Microsoft.PowerShell_profile.ps1](Microsoft.PowerShell_profile.ps1) : PowerShell profile. Includes : Oh My Posh, Terminal-Icons, Github Copilot, hcloud, [sudo-like](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed) and more
 - [powershell.config.json](powershell.config.json) : PowerShell configuration file
+- [windows-terminal.json](windows-terminal.json) : Config for the Windows Terminal
+- [winget.txt](winget.txt) : Installed winget packages. Obtained through `Get-WinGetPackage | Format-Table -AutoSize | Out-File -Width 500 -FilePath winget.txt`
 
 ## Both :nerd_face:
 
 Files :
 - [.gitconfig](.gitconfig) : Git configuration file
 - [cargo.txt](cargo.txt) : List of Rust packages
-- [vscode-extenstions.txt](vscode-extenstions.txt) : List of VSCode extensions. Reinstall with [this script](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261)
+- [vscode-extensions.txt](vscode-extensions.txt) : List of VSCode extensions. Reinstall with [this script](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261)
 - [vscode-settings.json](vscode-settings.json) : VSCode settings
 
 Folders :

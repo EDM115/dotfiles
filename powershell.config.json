@@ -1,1 +1,12 @@
-{"ExperimentalFeatures":["PSFeedbackProvider","PSCommandNotFoundSuggestion"]}
+{
+  "ExperimentalFeatures": [
+    "PSFeedbackProvider",
+    "PSCommandNotFoundSuggestion"
+  ],
+  "Microsoft.PowerShell:ExecutionPolicy": "RemoteSigned",
+  "WindowsPowerShellCompatibilityModuleDenyList": [
+    "PSScheduledJob",
+    "BestPractices",
+    "UpdateServices"
+  ]
+}
