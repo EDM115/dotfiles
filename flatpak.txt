@@ -1,13 +1,13 @@
-OBS Project - com.obsproject.Studio
-Freedesktop Platform - org.freedesktop.Platform
-Mesa - org.freedesktop.Platform.GL.default
-Mesa (Extra) - org.freedesktop.Platform.GL.default
-ffmpeg-full - org.freedesktop.Platform.ffmpeg-full
-openh264 - org.freedesktop.Platform.openh264
-Yaru Gtk Theme - org.gtk.Gtk3theme.Yaru
-Yaru-dark Gtk Theme - org.gtk.Gtk3theme.Yaru-dark
-KDE Application Platform - org.kde.Platform
-QGnomePlatform - org.kde.PlatformTheme.QGnomePlatform
-QAdwaitaDecorations - org.kde.WaylandDecoration.QAdwaitaDecorations
-Telegram Desktop - org.telegram.desktop
-Telegram Desktop Webview Add-on - org.telegram.desktop.webview
+OBS Studio	com.obsproject.Studio
+Freedesktop Platform	org.freedesktop.Platform
+Mesa	org.freedesktop.Platform.GL.default
+Mesa (Extra)	org.freedesktop.Platform.GL.default
+ffmpeg-full	org.freedesktop.Platform.ffmpeg-full
+openh264	org.freedesktop.Platform.openh264
+Yaru Gtk Theme	org.gtk.Gtk3theme.Yaru
+Yaru-dark Gtk Theme	org.gtk.Gtk3theme.Yaru-dark
+KDE Application Platform	org.kde.Platform
+QGnomePlatform	org.kde.PlatformTheme.QGnomePlatform
+QAdwaitaDecorations	org.kde.WaylandDecoration.QAdwaitaDecorations
+Telegram Desktop	org.telegram.desktop
+Telegram Desktop Webview Add-on	org.telegram.desktop.webview

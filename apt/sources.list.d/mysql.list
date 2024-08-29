@@ -1,0 +1,8 @@
+### THIS FILE IS AUTOMATICALLY CONFIGURED ###
+# You may comment out entries below, but any other modifications may be lost.
+# Use command 'dpkg-reconfigure mysql-apt-config' as root for modifications.
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-apt-config
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-8.0
+deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-tools
+#deb [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-tools-preview
+deb-src [signed-by=/usr/share/keyrings/mysql-apt-config.gpg] http://repo.mysql.com/apt/ubuntu/ noble mysql-8.0

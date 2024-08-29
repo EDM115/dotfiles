@@ -8,9 +8,9 @@ More info on [REINSTALL.md](./REINSTALL.md)
 Files :
 - [.zshrc](.zshrc) : Zsh configuration file. Includes : Oh My Zsh, Oh My Posh, fzf, zoxide and more
 - [apt-fast.conf](apt-fast.conf) : Apt-fast configuration file
-- [apt.txt](apt.txt) : List of apt packages. May contain extra libs
-- [flatpak.txt](flatpak.txt) : List of flatpak packages
-- [homebrew.txt](homebrew.txt) : List of Homebrew packages
+- [apt.txt](apt.txt) : List of apt packages. May contain extra libs (`apt list --installed | grep -F '[installé]' | cut -d '/' -f 1 > apt.txt`)
+- [flatpak.txt](flatpak.txt) : List of flatpak packages (`flatpak list --columns=name,application > flatpak.txt`)
+- [homebrew.txt](homebrew.txt) : List of Homebrew packages (`brew list > homebrew.txt`)
 - [launch-discord.sh](launch-discord.sh) & [upgrade-discord.sh](upgrade-discord.sh) : Scripts to launch and upgrade Discord ([source](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5))
 
 Folders :
