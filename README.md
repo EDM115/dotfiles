@@ -36,3 +36,4 @@ Files :
 
 Folders :
 - [omp/](omp/) : Oh My Posh themes ([source](https://github.com/EDM115/EDM115-ohmyposh-theme))
+- [spicetify/](spicetify/) : Spicetify config, themes and extensions, as well as a marketplace backup
