@@ -1,11 +1,15 @@
 act
 binutils
+btop
 difftastic
+dust
+gcc
 gmp
 isl
 libmpc
 lz4
 mpfr
+tlrc
 xz
 zlib
 zstd
