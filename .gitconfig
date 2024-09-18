@@ -1,79 +1,7 @@
 [alias]
     fpush = push --force-with-lease
-	push = push --progress
 [branch]
     sort = -committerdate
-[column]
-    ui = always
-[commit]
-    gpgsign = true
-    cleanup = whitespace
-[core]
-    autocrlf = input
-    longpaths = true
-    fsmonitor = true
-    pager = delta
-    eol = lf
-[delta]
-    navigate = true
-    light = false
-    syntax-theme = Dracula
-[diff]
-    algorithm = histogram
-    colorMoved = default
-    tool = difftastic
-[difftool]
-    prompt = false
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
-[fetch]
-    fsckObjects = true
-[filter "lfs"]
-    required = true
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-[help]
-    autocorrect = 10
-[http]
-    postBuffer = 2147483648
-[init]
-    defaultBranch = master
-[interactive]
-    diffFilter = delta --color-only
-[merge]
-  conflictStyle = zdiff3
-[pager]
-    difftool = true
-[pull]
-    rebase = false
-[push]
-    default = current
-    autoSetupRemote = true
-[receive]
-    fsckObjects = true
-[rerere]
-    enabled = true
-    autoUpdate = true
-[tag]
-    sort = taggerdate
-    forceSignAnnotated = true
-[transfer]
-    fsckObjects = true
-
-# INCLUDES
-# --------
-# Local/Private config goes in the include
-[include]
-    path = ~/.gitconfig.local
-# URL ALIASES
-# -----------
-# Alias for Dracula Org repositories
-[url "https://github.com/dracula/"]
-    insteadOf = dracula://
-# COLORS
-# ------
-# Dracula Dark Theme
 [color]
     ui = auto
 [color "branch"]
@@ -113,3 +41,70 @@
     unmerged = magenta bold reverse
     untracked = red
     updated = green bold
+[column]
+    ui = always
+[commit]
+    cleanup = whitespace
+    gpgsign = true
+[core]
+    autocrlf = input
+    eol = lf
+    fsmonitor = true
+    longpaths = true
+    pager = delta
+    progress = true
+[delta]
+    light = false
+    navigate = true
+    syntax-theme = Dracula
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    tool = difftastic
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[fetch]
+    fsckObjects = true
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    process = git-lfs filter-process
+    required = true
+    smudge = git-lfs smudge -- %f
+[gitbutler]
+    aiModelProvider = openai
+[help]
+    autocorrect = 10
+[http]
+    postBuffer = 2147483648
+[include]
+    path = ~/.gitconfig.local
+[init]
+    defaultBranch = master
+[interactive]
+    diffFilter = delta --color-only
+[merge]
+  conflictStyle = zdiff3
+[pager]
+    difftool = true
+[pull]
+    rebase = false
+[push]
+    autoSetupRemote = true
+    default = current
+    verbose = true
+[receive]
+    fsckObjects = true
+[rerere]
+    autoUpdate = true
+    enabled = true
+[tag]
+    forceSignAnnotated = true
+    sort = taggerdate
+[transfer]
+    fsckObjects = true
+[url "https://github.com/dracula/"]
+    insteadOf = dracula://
+[user]
+    name = EDM115
