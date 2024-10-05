@@ -2,8 +2,7 @@ Types: deb
 URIs: https://ppa.launchpadcontent.net/zhangsongcui3371/fastfetch/ubuntu/
 Suites: noble
 Components: main
-Signed-By: 
- -----BEGIN PGP PUBLIC KEY BLOCK-----
+Signed-By: -----BEGIN PGP PUBLIC KEY BLOCK-----
  .
  mQINBGXC33sBEADqChRifM9aJb4sJnn9jKV4mdt9Rj90OAYfySPuVyVX+dDKWP8X
  ATjtDDNJeROme4+05iSt1SAey9W0ugYo8ft2LeMCjWlog6mlM3EPJ4UelEVBOGpF

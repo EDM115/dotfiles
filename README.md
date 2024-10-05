@@ -30,7 +30,7 @@ Files :
 
 Files :
 - [.gitconfig](.gitconfig) : Git configuration file
-- [cargo.txt](cargo.txt) : List of Rust packages
+- [cargo.txt](cargo.txt) : List of Rust packages (`cargo install --list > cargo.txt`)
 - [vscode-extensions.txt](vscode-extensions.txt) : List of VSCode extensions. Reinstall with [this script](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261)
 - [vscode-settings.json](vscode-settings.json) : VSCode settings
 

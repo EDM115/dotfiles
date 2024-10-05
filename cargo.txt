@@ -1,5 +1,16 @@
-cargo-cache
-cargo-edit
-cargo-update
-git-delta
-zellij
+cargo-cache v0.8.3:
+    cargo-cache
+cargo-edit v0.13.0:
+    cargo-add
+    cargo-rm
+    cargo-set-version
+    cargo-upgrade
+cargo-update v15.0.0:
+    cargo-install-update
+    cargo-install-update-config
+eza v0.20.1:
+    eza
+git-delta v0.18.2:
+    delta
+zellij v0.40.1:
+    zellij

@@ -1,9 +1,18 @@
+Modrinth App	com.modrinth.ModrinthApp
 OBS Studio	com.obsproject.Studio
+Mission Center	io.missioncenter.MissionCenter
+TAP-plugins	org.freedesktop.LinuxAudio.Plugins.TAP
+SWH	org.freedesktop.LinuxAudio.Plugins.swh
 Freedesktop Platform	org.freedesktop.Platform
+Mesa	org.freedesktop.Platform.GL.default
+Mesa (Extra)	org.freedesktop.Platform.GL.default
 Mesa	org.freedesktop.Platform.GL.default
 Mesa (Extra)	org.freedesktop.Platform.GL.default
 ffmpeg-full	org.freedesktop.Platform.ffmpeg-full
 openh264	org.freedesktop.Platform.openh264
+openh264	org.freedesktop.Platform.openh264
+GNOME Application Platform version 46	org.gnome.Platform
+GNOME Application Platform version 47	org.gnome.Platform
 Yaru Gtk Theme	org.gtk.Gtk3theme.Yaru
 Yaru-dark Gtk Theme	org.gtk.Gtk3theme.Yaru-dark
 KDE Application Platform	org.kde.Platform
