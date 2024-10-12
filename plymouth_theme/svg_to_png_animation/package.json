@@ -1,0 +1,17 @@
+{
+  "name": "svg_to_png_animation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "convert": "export CHROME_DEVEL_SANDBOX=/opt/google/chrome-unstable/chrome-sandbox && node convert.js",
+    "gif": "ffmpeg -framerate 30 -i frames/frame_%03d.png -vf \"palettegen\" palette.png && ffmpeg -framerate 30 -i frames/frame_%03d.png -i palette.png -lavfi \"paletteuse\" animation.gif",
+    "mp4": "ffmpeg -framerate 30 -i frames/frame_%03d.png -c:v libx264 -pix_fmt yuv420p animation.mp4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "puppeteer": "^23.5.3"
+  }
+}

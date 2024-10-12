@@ -10,12 +10,14 @@ Files :
 - [apt-fast.conf](apt-fast.conf) : Apt-fast configuration file
 - [apt.txt](apt.txt) : List of apt packages. May contain extra libs (`apt list --installed | grep -F '[installé]' | cut -d '/' -f 1 > apt.txt`)
 - [flatpak.txt](flatpak.txt) : List of flatpak packages (`flatpak list --columns=name,application > flatpak.txt`)
+- [grub](./grub) : My grub config (from `/etc/default/grub`)
 - [homebrew.txt](homebrew.txt) : List of Homebrew packages (`brew list > homebrew.txt`)
 - [launch-discord.sh](launch-discord.sh) & [upgrade-discord.sh](upgrade-discord.sh) : Scripts to launch and upgrade Discord ([source](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5))
 
 Folders :
 - [apt/sources.list.d/](apt/sources.list.d/) : Sources list for apt
 - [grub_theme/](grub_theme/) : Custom GRUB theme
+- [plymouth_theme](plymouth_theme/) : Custom Plymouth theme, along with js thing to generate the images for the spinner. Currently broken (sorta)
 
 ## Windows :window:
 

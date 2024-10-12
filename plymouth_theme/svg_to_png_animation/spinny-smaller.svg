@@ -1,0 +1,57 @@
+<svg width="100" height="100" stroke="#FFB86C" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .spinner-wrapper {
+      transform-origin: center;
+      transform: scale(0.75);
+    }
+
+    .spinner-container {
+      transform-origin: center;
+      animation: rotate-animation 2s linear infinite;
+    }
+
+    .spinner-circle {
+      stroke-linecap: round;
+      stroke-width: 2.5;
+      animation: dash-animation 1.5s ease-in-out infinite;
+    }
+
+    .spinner-glow {
+      stroke-linecap: round;
+      stroke-width: 3;
+      stroke: #F8F8F2;
+      opacity: 0.5;
+      filter: blur(4px);
+      animation: dash-animation 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotate-animation {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes dash-animation {
+      0% {
+        stroke-dasharray: 0 150;
+        stroke-dashoffset: 0;
+      }
+      47.5% {
+        stroke-dasharray: 42 150;
+        stroke-dashoffset: -16;
+      }
+      95%, 100% {
+        stroke-dasharray: 42 150;
+        stroke-dashoffset: -59;
+      }
+    }
+  </style>
+
+  <g class="spinner-wrapper">
+    <g class="spinner-container">
+      <circle class="spinner-glow" cx="12" cy="12" r="9.5" fill="none"></circle>
+      <circle class="spinner-circle" cx="12" cy="12" r="9.5" fill="none" stroke="#FFB86C"></circle>
+    </g>
+  </g>
+</svg>
+

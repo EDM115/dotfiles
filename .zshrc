@@ -94,7 +94,7 @@ alias ls="ls -Ahosp --color=always --group-directories-first"
 alias nano="nano -Scim --tabsize=2 --fill=-2"
 alias upd="sudo apt-fast update && sudo apt-fast upgrade && brew update && brew upgrade && npm update -g && gh extension upgrade --all && rustup update && cargo install-update -a && sudo snap refresh && sudo flatpak update"
 alias upd-extra="sudo oh-my-posh upgrade --force && bash <(curl -sSL https://spotx-official.github.io/run.sh) -dhp --installdeb && spicetify update backup apply && cd $ZSH/custom/plugins && git-pulls && omz update"
-alias vencord='sudo sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
+alias vencord='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
 
 eval "$(oh-my-posh init zsh --config $HOME/omp/EDM115-newline.omp.json)"
 eval "$(zoxide init --cmd cd zsh)"
