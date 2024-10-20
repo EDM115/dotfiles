@@ -1,0 +1,53 @@
+{
+  "resolved": "file:D:/EDM115/Programmes/fnm/node-versions/v22.8.0/installation",
+  "dependencies": {
+    "@githubnext/github-copilot-cli": {
+      "version": "0.1.36",
+      "overridden": false
+    },
+    "cross-env": {
+      "version": "7.0.3",
+      "overridden": false
+    },
+    "dotenv-cli": {
+      "version": "7.4.2",
+      "overridden": false
+    },
+    "dracula-console": {
+      "version": "1.0.0",
+      "overridden": false
+    },
+    "env-cmd": {
+      "version": "10.1.0",
+      "overridden": false
+    },
+    "generator-code": {
+      "version": "1.11.2",
+      "overridden": false
+    },
+    "gitmoji-cli": {
+      "version": "9.5.0",
+      "overridden": false
+    },
+    "ncp": {
+      "version": "2.0.0",
+      "overridden": false
+    },
+    "npm": {
+      "version": "10.9.0",
+      "overridden": false
+    },
+    "oracledb": {
+      "version": "6.6.0",
+      "overridden": false
+    },
+    "rimraf": {
+      "version": "6.0.1",
+      "overridden": false
+    },
+    "yo": {
+      "version": "5.0.0",
+      "overridden": false
+    }
+  }
+}

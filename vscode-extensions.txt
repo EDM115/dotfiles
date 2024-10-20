@@ -2,6 +2,7 @@ aaron-bond.better-comments
 akhail.save-typing
 antfu.vite
 atishay-jain.all-autocomplete
+axelrindle.duplicate-file
 britesnow.vscode-toggle-quotes
 chakrounanas.turbo-console-log
 christian-kohler.npm-intellisense
@@ -16,15 +17,18 @@ dkundel.vscode-npm-source
 donjayamanne.githistory
 dracula-theme-pro.theme-dracula-pro
 dracula-theme.theme-dracula
+dustypomerleau.rust-syntax
 eamodio.gitlens
 ecmel.vscode-html-css
 enkeldigital.open-lnk
 esbenp.prettier-vscode
+fill-labs.dependi
 formulahendry.auto-rename-tag
 formulahendry.docker-explorer
 foxundermoon.shell-format
 github.copilot
 github.copilot-chat
+github.copilot-workspace
 github.vscode-github-actions
 github.vscode-pull-request-github
 hbenl.vscode-test-explorer
@@ -34,6 +38,7 @@ hurly.sqltools-oracle-driver
 ibm.output-colorizer
 ishiyama.vuejs-peek
 jabacchetta.vscode-essentials
+jakeboone02.cypher-query-language
 jithurjacob.nbpreviewer
 jock.svg
 juxtopposed.realtime-themes
@@ -81,8 +86,10 @@ pnp.polacode
 pranaygp.vscode-css-peek
 randomfractalsinc.vscode-data-preview
 redhat.java
+redhat.vscode-xml
 redhat.vscode-yaml
 reliutg.visual-regex
+rust-lang.rust-analyzer
 sburg.vscode-javascript-booster
 seatonjiang.gitmoji-vscode
 shalldie.background
