@@ -37,6 +37,7 @@ Files :
 Files :
 - [.gitconfig](.gitconfig) : Git configuration file
 - [cargo.txt](cargo.txt) : List of Rust packages (`cargo install --list > cargo.txt`)
+- [gh-extensions.txt](gh-extensions.txt) : List of extensions for the GH CLI (`gh extension list > gh-extensions.txt`)
 - [Microsoft.PowerShell_profile.ps1](Microsoft.PowerShell_profile.ps1) : PowerShell profile. Includes : Oh My Posh, Terminal-Icons, Github Copilot, hcloud, [sudo-like](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed) and more
 - [npm.json](npm.json) : List of globally installed NPM packages (`npm ls -g --json > npm.json`)
 - [pip.txt](pip.txt) : List of installed Pip packages (`pip freeze > pip.txt`)
