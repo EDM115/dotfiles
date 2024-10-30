@@ -69,17 +69,17 @@ setopt hist_ignore_space
 setopt hist_save_no_dups
 setopt sharehistory
 
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu no
-zstyle ':completion:*:*:docker:*' option-stacking yes
-zstyle ':completion:*:*:docker-*:*' option-stacking yes
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-zstyle ':omz:update' mode disabled
+zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
+zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
+zstyle ":completion:*" menu no
+zstyle ":completion:*:*:docker:*" option-stacking yes
+zstyle ":completion:*:*:docker-*:*" option-stacking yes
+zstyle ":fzf-tab:complete:cd:*" fzf-preview "ls --color $realpath"
+zstyle ":fzf-tab:complete:__zoxide_z:*" fzf-preview "ls --color $realpath"
+zstyle ":omz:update" mode disabled
 
-bindkey '^[[1;5A' history-substring-search-up
-bindkey '^[[1;5B' history-substring-search-down
+bindkey "^[[1;5A" history-substring-search-up
+bindkey "^[[1;5B" history-substring-search-down
 
 alias apt="apt-fast"
 alias apt-get="apt-fast"
@@ -100,3 +100,4 @@ eval "$(oh-my-posh init zsh --config $HOME/omp/EDM115-newline.omp.json)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 eval "$(gh copilot alias -- zsh)"
+eval "$(thefuck --alias)"
