@@ -50,6 +50,7 @@
     autocrlf = input
     eol = lf
     fsmonitor = true
+    ignorecase = false
     longpaths = true
     pager = delta
     progress = true
@@ -85,7 +86,9 @@
 [interactive]
     diffFilter = delta --color-only
 [merge]
-  conflictStyle = zdiff3
+    conflictStyle = zdiff3
+[pack]
+    usePathWalk = true
 [pager]
     difftool = true
 [pull]
