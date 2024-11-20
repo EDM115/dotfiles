@@ -27,6 +27,7 @@ Folders :
 
 Files :
 - [dracula.ps1](dracula.ps1) : Dracula colorscheme for [Terminal-Icons](https://github.com/devblackops/Terminal-Icons)
+- [ptr.toml](ptr.toml) : Installed PowerToys Run plugins, comes from `C:\Users\EDM115\AppData\Local\Microsoft\PowerToys\PowerToys Run\Plugins\version.toml`. Tool : [8LWXpg/ptr](https://github.com/8LWXpg/ptr)
 - [windows-terminal.json](windows-terminal.json) : Config for the Windows Terminal
 - [winget.txt](winget.txt) : Installed winget packages. Obtained through `Get-WinGetPackage | Format-Table -AutoSize | Out-File -Width 500 -FilePath winget.txt`
 
