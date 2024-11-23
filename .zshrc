@@ -48,7 +48,7 @@ fpath+=($HOME/.zfunc ${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-
 compinit
 source $HOME/.fzf.zsh
 
-AUTO_NOTIFY_IGNORE+=("ghcs" "ghce" "npm run dev" "docker")
+AUTO_NOTIFY_IGNORE+=("ghcs" "ghce" "npm run dev" "docker" "git diff")
 COMPLETION_WAITING_DOTS="true"
 ENABLE_CORRECTION=true
 FNM_PATH="$HOME/.local/share/fnm"
@@ -81,8 +81,6 @@ zstyle ":omz:update" mode disabled
 bindkey "^[[1;5A" history-substring-search-up
 bindkey "^[[1;5B" history-substring-search-down
 
-alias apt="apt-fast"
-alias apt-get="apt-fast"
 alias cln="sudo apt-fast autoremove && sudo apt-fast clean && sudo journalctl --vacuum-size=100M && brew cleanup && pip cache purge && npm cache clean --force && cargo cache -a && flatpak uninstall --unused"
 alias cls="clear"
 alias code="code-insiders"

@@ -5,12 +5,17 @@ cargo-edit v0.13.0:
     cargo-rm
     cargo-set-version
     cargo-upgrade
-cargo-update v15.0.0:
+cargo-update v16.0.0:
     cargo-install-update
     cargo-install-update-config
-eza v0.20.1:
+eza v0.20.9:
     eza
 git-delta v0.18.2:
     delta
-zellij v0.40.1:
+lucky_commit v2.2.3:
+    lucky_commit
+mergiraf v0.3.1:
+    mergiraf
+    mgf_dev
+zellij v0.41.2:
     zellij

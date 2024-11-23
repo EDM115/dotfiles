@@ -1,22 +1,82 @@
+Pinta	com.github.PintaProject.Pinta
+TLP-UI	com.github.d4nj1.tlpui
+Notepad Next	com.github.dail8859.NotepadNext
+Czkawka	com.github.qarmin.czkawka
+Flatseal	com.github.tchx84.Flatseal
+Easy Effects	com.github.wwmm.easyeffects
+Heroic Games Launcher	com.heroicgameslauncher.hgl
+Celeste	com.hunterwittenborn.Celeste
 Modrinth App	com.modrinth.ModrinthApp
 OBS Studio	com.obsproject.Studio
+Bouteilles	com.usebottles.bottles
+HandBrake	fr.handbrake.ghb
+Nettoyeur de métadonnées	fr.romainvigier.MetadataCleaner
+PeaZip	io.github.peazip.PeaZip
+peazip i386 addon	io.github.peazip.PeaZip.Addon.i386
+Mousai	io.github.seadve.Mousai
+fan-control	io.github.wiiznokes.fan-control
+Switcheroo	io.gitlab.adhami3310.Converter
+Impression	io.gitlab.adhami3310.Impression
+Text Pieces	io.gitlab.liferooter.TextPieces
 Mission Center	io.missioncenter.MissionCenter
+Lutris	net.lutris.Lutris
+LosslessCut	no.mifi.losslesscut
+Audacity	org.audacityteam.Audacity
+Codecs	org.audacityteam.Audacity.Codecs
+Calf	org.freedesktop.LinuxAudio.Plugins.Calf
+LSP	org.freedesktop.LinuxAudio.Plugins.LSP
+MDA	org.freedesktop.LinuxAudio.Plugins.MDA
 TAP-plugins	org.freedesktop.LinuxAudio.Plugins.TAP
+ZamPlugins	org.freedesktop.LinuxAudio.Plugins.ZamPlugins
 SWH	org.freedesktop.LinuxAudio.Plugins.swh
 Freedesktop Platform	org.freedesktop.Platform
+Freedesktop Platform	org.freedesktop.Platform
+Freedesktop Platform	org.freedesktop.Platform
+i386	org.freedesktop.Platform.Compat.i386
 Mesa	org.freedesktop.Platform.GL.default
 Mesa (Extra)	org.freedesktop.Platform.GL.default
 Mesa	org.freedesktop.Platform.GL.default
 Mesa (Extra)	org.freedesktop.Platform.GL.default
-ffmpeg-full	org.freedesktop.Platform.ffmpeg-full
+Mesa	org.freedesktop.Platform.GL.default
+Mesa (Extra)	org.freedesktop.Platform.GL.default
+Mesa	org.freedesktop.Platform.GL32.default
+Mesa	org.freedesktop.Platform.GL32.default
+FFmpeg extension with extra codecs	org.freedesktop.Platform.ffmpeg-full
+FFmpeg extension with extra codecs	org.freedesktop.Platform.ffmpeg-full
+i386	org.freedesktop.Platform.ffmpeg_full.i386
+i386	org.freedesktop.Platform.ffmpeg_full.i386
 openh264	org.freedesktop.Platform.openh264
 openh264	org.freedesktop.Platform.openh264
+Éditeur d’image GIMP	org.gimp.GIMP
+GNOME Application Platform version 45	org.gnome.Platform
 GNOME Application Platform version 46	org.gnome.Platform
 GNOME Application Platform version 47	org.gnome.Platform
+i386	org.gnome.Platform.Compat.i386
+i386	org.gnome.Platform.Compat.i386
+Identity	org.gnome.gitlab.YaLTeR.Identity
 Yaru Gtk Theme	org.gtk.Gtk3theme.Yaru
 Yaru-dark Gtk Theme	org.gtk.Gtk3theme.Yaru-dark
 KDE Application Platform	org.kde.Platform
+KDE Application Platform	org.kde.Platform
+KDE Application Platform	org.kde.Platform
+KDE Application Platform	org.kde.Platform
+QGnomePlatform	org.kde.PlatformTheme.QGnomePlatform
+QGnomePlatform	org.kde.PlatformTheme.QGnomePlatform
 QGnomePlatform	org.kde.PlatformTheme.QGnomePlatform
 QAdwaitaDecorations	org.kde.WaylandDecoration.QAdwaitaDecorations
+QAdwaitaDecorations	org.kde.WaylandDecoration.QAdwaitaDecorations
+QAdwaitaDecorations	org.kde.WaylandDecoration.QAdwaitaDecorations
+QAdwaitaDecorations	org.kde.WaylandDecoration.QAdwaitaDecorations
+QGnomePlatform-decoration	org.kde.WaylandDecoration.QGnomePlatform-decoration
+QGnomePlatform-decoration	org.kde.WaylandDecoration.QGnomePlatform-decoration
+Okular	org.kde.okular
+LocalSend	org.localsend.localsend_app
+qBittorrent	org.qbittorrent.qBittorrent
 Telegram Desktop	org.telegram.desktop
 Telegram Desktop Webview Add-on	org.telegram.desktop.webview
+Upscayl	org.upscayl.Upscayl
+DXVK	org.winehq.Wine.DLLs.dxvk
+Gecko	org.winehq.Wine.gecko
+gecko	org.winehq.Wine.gecko
+Mono	org.winehq.Wine.mono
+mono	org.winehq.Wine.mono
