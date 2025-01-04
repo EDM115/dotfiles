@@ -1,5 +1,5 @@
 {
-  "resolved": "file:D:/EDM115/Programmes/fnm/node-versions/v22.8.0/installation",
+  "resolved": "file:D:/EDM115/Programmes/fnm/node-versions/v23.5.0/installation",
   "dependencies": {
     "@githubnext/github-copilot-cli": {
       "version": "0.1.36",
@@ -10,7 +10,7 @@
       "overridden": false
     },
     "dotenv-cli": {
-      "version": "7.4.2",
+      "version": "8.0.0",
       "overridden": false
     },
     "dracula-console": {
@@ -22,7 +22,7 @@
       "overridden": false
     },
     "generator-code": {
-      "version": "1.11.2",
+      "version": "1.11.5",
       "overridden": false
     },
     "gitmoji-cli": {
@@ -34,11 +34,11 @@
       "overridden": false
     },
     "npm": {
-      "version": "10.9.0",
+      "version": "11.0.0",
       "overridden": false
     },
     "oracledb": {
-      "version": "6.6.0",
+      "version": "6.7.1",
       "overridden": false
     },
     "rimraf": {
@@ -46,7 +46,7 @@
       "overridden": false
     },
     "yo": {
-      "version": "5.0.0",
+      "version": "5.1.0",
       "overridden": false
     }
   }
