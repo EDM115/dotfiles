@@ -48,12 +48,14 @@
     gpgsign = true
 [core]
     autocrlf = input
+    commitGraph = true
     eol = lf
     fsmonitor = true
     ignorecase = false
     longpaths = true
     pager = delta
     progress = true
+    untrackedCache = true
 [delta]
     light = false
     navigate = true
@@ -66,8 +68,13 @@
     prompt = false
 [difftool "difftastic"]
     cmd = difft "$LOCAL" "$REMOTE"
+[feature]
+    manyFiles = true
 [fetch]
     fsckObjects = true
+    writeCommitGraph = true
+[gc]
+    writeCommitGraph = true
 [filter "lfs"]
     clean = git-lfs clean -- %f
     process = git-lfs filter-process
@@ -81,6 +88,8 @@
     postBuffer = 2147483648
 [include]
     path = ~/.gitconfig.local
+[index]
+    version = 4
 [init]
     defaultBranch = master
 [interactive]

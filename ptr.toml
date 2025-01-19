@@ -16,7 +16,7 @@ version = "v0.11.0"
 
 [plugins.CurrencyConverter]
 repo = "Advaith3600/PowerToys-Run-Currency-Converter"
-version = "v1.5.1"
+version = "v1.5.2"
 
 [plugins.Everything]
 repo = "lin-ycv/EverythingPowerToys"
@@ -60,7 +60,7 @@ version = "v1.5.0"
 
 [plugins.Spotify]
 repo = "waaverecords/PowerToys-Run-Spotify"
-version = "v0.87.0"
+version = "v0.87.1"
 
 [plugins.UnicodeInput]
 repo = "nathancartlidge/powertoys-run-unicode"

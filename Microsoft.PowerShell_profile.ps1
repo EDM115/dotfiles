@@ -98,6 +98,12 @@ function Invoke-ARRPC {
 }
 Set-Alias -Name arrpc -Value Invoke-ARRPC
 
+# 8LWXpg/ptr
+(ptr completion) -join "`n" | iex
+
+function edit-history {
+    notepad "C:\Users\EDM115\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
+}
 
 # Stuff from https://github.com/ChrisTitusTech/powershell-profile/blob/main/Microsoft.PowerShell_profile.ps1
 function Test-CommandExists {
