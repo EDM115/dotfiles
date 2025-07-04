@@ -9,13 +9,11 @@
                 "action": "copy",
                 "singleLine": false
             },
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
+            "id": "User.copy.644BA8F2"
         },
         {
             "command": "paste",
-            "id": "User.paste",
-            "keys": "ctrl+v"
+            "id": "User.paste"
         },
         {
             "command": 
@@ -24,27 +22,47 @@
                 "split": "auto",
                 "splitMode": "duplicate"
             },
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "id": "User.splitPane.A6751878"
         },
         {
             "command": "find",
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "id": "User.find"
         },
         {
-            "name": "LifeCompanion",
-            "command": {
+            "command": 
+            {
                 "action": "wt",
                 "commandline": "--maximized --profile \"PowerShell\" --tabColor \"#FFA318\" --title \"                              app\" pwsh -NoExit -Command \"cd lifecompanion && cls\" ; new-tab --profile \"PowerShell\" --tabColor \"#19FF29\" --title \"                              plugin\" pwsh -NoExit -Command \"cd lifecompanion-plugins\\lc-phonecontrol-plugin && cls\" ; new-tab --profile \"PowerShell\" --tabColor \"#3274FF\" --title \"                              adb\" pwsh -NoExit -Command \"cls\" ; new-tab --profile \"PowerShell\" --tabColor \"#757575\" --title \"                              extra\" pwsh -NoExit -Command \"cls\""
-            }
+            },
+            "id": "User.wt.1A214BE3",
+            "name": "LifeCompanion"
         }
     ],
     "centerOnLaunch": true,
+    "compatibility.allowHeadless": false,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "focusFollowMouse": true,
+    "keybindings": 
+    [
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
+        }
+    ],
     "language": "fr-FR",
     "launchMode": "default",
     "newTabMenu": 
@@ -60,6 +78,7 @@
         {
             "autoMarkPrompts": true,
             "colorScheme": "Dracula",
+            "compatibility.allowDECRQCRA": true,
             "cursorShape": "underscore",
             "experimental.repositionCursorWithMouse": true,
             "experimental.retroTerminalEffect": false,
@@ -80,7 +99,7 @@
                     "ss09": 1
                 }
             },
-            "opacity": 50,
+            "opacity": 60,
             "showMarksOnScrollbar": true,
             "useAcrylic": true
         },
@@ -101,6 +120,10 @@
                 "startingDirectory": null
             },
             {
+                "font": 
+                {
+                    "face": "FiraCode Nerd Font"
+                },
                 "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
                 "hidden": false,
                 "name": "Git Bash",

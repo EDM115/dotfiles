@@ -1,0 +1,104 @@
+[
+  {
+    "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5",
+    "private": false,
+    "dependencies": {
+      "@google/gemini-cli": {
+        "from": "@google/gemini-cli",
+        "version": "0.1.9",
+        "resolved": "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.1.9.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@google+gemini-cli@0.1.9_encoding@0.1.13\\node_modules\\@google\\gemini-cli"
+      },
+      "@typescript/native-preview": {
+        "from": "@typescript/native-preview",
+        "version": "7.0.0-dev.20250703.1",
+        "resolved": "https://registry.npmjs.org/@typescript/native-preview/-/native-preview-7.0.0-dev.20250703.1.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@typescript+native-preview@7.0.0-dev.20250703.1\\node_modules\\@typescript\\native-preview"
+      },
+      "cross-env": {
+        "from": "cross-env",
+        "version": "7.0.3",
+        "resolved": "https://registry.npmjs.org/cross-env/-/cross-env-7.0.3.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\cross-env@7.0.3\\node_modules\\cross-env"
+      },
+      "dotenv-cli": {
+        "from": "dotenv-cli",
+        "version": "8.0.0",
+        "resolved": "https://registry.npmjs.org/dotenv-cli/-/dotenv-cli-8.0.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\dotenv-cli@8.0.0\\node_modules\\dotenv-cli"
+      },
+      "dracula-console": {
+        "from": "dracula-console",
+        "version": "1.0.0",
+        "resolved": "https://registry.npmjs.org/dracula-console/-/dracula-console-1.0.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\dracula-console@1.0.0\\node_modules\\dracula-console"
+      },
+      "env-cmd": {
+        "from": "env-cmd",
+        "version": "10.1.0",
+        "resolved": "https://registry.npmjs.org/env-cmd/-/env-cmd-10.1.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\env-cmd@10.1.0\\node_modules\\env-cmd"
+      },
+      "generator-code": {
+        "from": "generator-code",
+        "version": "1.11.9",
+        "resolved": "https://registry.npmjs.org/generator-code/-/generator-code-1.11.9.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\generator-code@1.11.9_@type_a932cfb2fbb6c41c4da1835518cb2953\\node_modules\\generator-code"
+      },
+      "gitmoji-cli": {
+        "from": "gitmoji-cli",
+        "version": "9.7.0",
+        "resolved": "https://registry.npmjs.org/gitmoji-cli/-/gitmoji-cli-9.7.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\gitmoji-cli@9.7.0\\node_modules\\gitmoji-cli"
+      },
+      "ncp": {
+        "from": "ncp",
+        "version": "2.0.0",
+        "resolved": "https://registry.npmjs.org/ncp/-/ncp-2.0.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\ncp@2.0.0\\node_modules\\ncp"
+      },
+      "node-gyp": {
+        "from": "node-gyp",
+        "version": "11.2.0",
+        "resolved": "https://registry.npmjs.org/node-gyp/-/node-gyp-11.2.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\node-gyp@11.2.0\\node_modules\\node-gyp"
+      },
+      "oracledb": {
+        "from": "oracledb",
+        "version": "6.8.0",
+        "resolved": "https://registry.npmjs.org/oracledb/-/oracledb-6.8.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\oracledb@6.8.0\\node_modules\\oracledb"
+      },
+      "rimraf": {
+        "from": "rimraf",
+        "version": "6.0.1",
+        "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-6.0.1.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\rimraf@6.0.1\\node_modules\\rimraf"
+      },
+      "tldr": {
+        "from": "tldr",
+        "version": "3.4.0",
+        "resolved": "https://registry.npmjs.org/tldr/-/tldr-3.4.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\tldr@3.4.0\\node_modules\\tldr"
+      },
+      "typescript": {
+        "from": "typescript",
+        "version": "5.8.3",
+        "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.8.3.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\typescript@5.8.3\\node_modules\\typescript"
+      },
+      "yarn": {
+        "from": "yarn",
+        "version": "1.22.22",
+        "resolved": "https://registry.npmjs.org/yarn/-/yarn-1.22.22.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\yarn@1.22.22\\node_modules\\yarn"
+      },
+      "yo": {
+        "from": "yo",
+        "version": "5.1.0",
+        "resolved": "https://registry.npmjs.org/yo/-/yo-5.1.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\yo@5.1.0_@types+node@24.0.1_8b29b53b346fbc43f4ce3eb0b2596b17\\node_modules\\yo"
+      }
+    }
+  }
+]

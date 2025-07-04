@@ -12,7 +12,6 @@ $ErrorActionPreference = "Continue"
 
 # OMP config
 oh-my-posh init pwsh --config 'C:\Users\EDM115\AppData\Local\Programs\oh-my-posh\themes\EDM115-newline.omp.json' | Invoke-Expression
-oh-my-posh completion powershell | Out-String | Invoke-Expression
 
 # sudo in Windows
 function sudo {
@@ -50,9 +49,73 @@ function git-pulls {
     cd ..
 }
 
+# Count commits per author email
+function git-commits {
+    git log --pretty=format:'%ae' |
+        Group-Object |
+        Sort-Object Count -Descending |
+        Select-Object @{Name='Email';Expression={$_.Name}}, @{Name='Commits';Expression={$_.Count}} |
+        Format-Table -AutoSize
+}
+
+# Aggregate diff stats per author email
+function git-diffs {
+    $stats = @{}
+    $currentEmail = ""
+
+    git log --pretty=format:'%ae' --numstat |
+        ForEach-Object {
+            $line = $_.Trim()
+
+            # Detect real email lines only
+            if ($line -match '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$') {
+                $currentEmail = $line
+                if (-not $stats.ContainsKey($currentEmail)) {
+                    $stats[$currentEmail] = [PSCustomObject]@{
+                        FilesChanged = 0
+                        LinesAdded   = 0
+                        LinesRemoved = 0
+                    }
+                }
+                return
+            }
+
+            # Handle only numstat lines
+            # numstat lines always have two tabs: "<added>\t<removed>\t<path>"
+            if ($line -notmatch "`t.*`t") { return }
+
+            $parts = $line -split "`t"
+            # skip binary files (they show "-" for both added and removed)
+            if ($parts[0] -eq '-' -and $parts[1] -eq '-') { return }
+
+            $added   = if ($parts[0] -match '^\d+$') { [int]$parts[0] } else { 0 }
+            $removed = if ($parts[1] -match '^\d+$') { [int]$parts[1] } else { 0 }
+
+            $stats[$currentEmail].FilesChanged++
+            $stats[$currentEmail].LinesAdded   += $added
+            $stats[$currentEmail].LinesRemoved += $removed
+        }
+
+    # Output sorted by total lines changed
+    $stats.GetEnumerator() |
+        Select-Object `
+            @{Name='Email';       Expression={ $_.Key }},
+            @{Name='FilesChanged';Expression={ $_.Value.FilesChanged }},
+            @{Name='LinesAdded';  Expression={ $_.Value.LinesAdded }},
+            @{Name='LinesRemoved';Expression={ $_.Value.LinesRemoved }},
+            @{Name='TotalLines';  Expression={ $_.Value.LinesAdded + $_.Value.LinesRemoved }} |
+        Sort-Object TotalLines -Descending |
+        Format-Table -AutoSize
+}
+
 # alias code to code-insiders
 function code {
     code-insiders $args
+}
+
+# get-path
+function get-path {
+    $env:PATH -split ';' | ForEach-Object { $_ }
 }
 
 # fnm
@@ -64,6 +127,9 @@ gh copilot alias -- pwsh | Out-String | Invoke-Expression
 
 # zoxide
 zoxide init powershell --cmd cd | Out-String | Invoke-Expression
+
+# PNPM
+pnpm completion pwsh | Out-String | Invoke-Expression
 
 # Terminal icons
 Import-Module -Name Terminal-Icons
@@ -105,6 +171,7 @@ function edit-history {
     notepad "C:\Users\EDM115\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
 }
 
+# -----
 # Stuff from https://github.com/ChrisTitusTech/powershell-profile/blob/main/Microsoft.PowerShell_profile.ps1
 function Test-CommandExists {
     param($command)
@@ -218,6 +285,8 @@ function flushdns {
 function cpy { Set-Clipboard $args[0] }
 
 function pst { Get-Clipboard }
+
+# -----
 
 
 #f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module

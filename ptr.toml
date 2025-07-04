@@ -1,14 +1,15 @@
 arch = "x64"
 pt_path = 'D:\EDM115\Programmes\PowerToys'
 admin = false
+no_restart = true
 
 [plugins.BrowserSearch]
 repo = "TBM13/BrowserSearch"
-version = "v1.8.0"
+version = "v1.10.0"
 
 [plugins.ChatGPT]
 repo = "ferraridavide/ChatGPTPowerToys"
-version = "v0.87.1"
+version = "v0.91.0"
 
 [plugins.ClipboardManager]
 repo = "CoreyHayward/PowerToys-Run-ClipboardManager"
@@ -16,11 +17,11 @@ version = "v0.11.0"
 
 [plugins.CurrencyConverter]
 repo = "Advaith3600/PowerToys-Run-Currency-Converter"
-version = "v1.5.2"
+version = "v1.5.4"
 
 [plugins.Everything]
 repo = "lin-ycv/EverythingPowerToys"
-version = "v0.87.0"
+version = "v0.91.1"
 
 [plugins.FastWeb]
 repo = "CCcat8059/FastWeb"
@@ -32,7 +33,7 @@ version = "v4.0.1"
 
 [plugins.GitHubRepo]
 repo = "8LWXpg/PowerToysRun-GitHubRepo"
-version = "v1.9.0"
+version = "v1.12.0"
 
 [plugins.GitKraken]
 repo = "davidegiacometti/PowerToys-Run-GitKraken"
@@ -40,15 +41,15 @@ version = "0.3.0"
 
 [plugins.HexInspector]
 repo = "NaroZeol/PowerHexInspector"
-version = "v0.3.0"
+version = "v0.4.0"
 
 [plugins.InputTyper]
 repo = "CoreyHayward/PowerToys-Run-InputTyper"
-version = "v0.2.0"
+version = "v0.3.0"
 
 [plugins.ProcessKiller]
 repo = "8LWXpg/PowerToysRun-ProcessKiller"
-version = "v1.9.0"
+version = "v1.12.2"
 
 [plugins.QuickLookup]
 repo = "GTGalaxi/quick-lookup-ptrun"
@@ -56,11 +57,11 @@ version = "v1.3.3"
 
 [plugins.SSH]
 repo = "8LWXpg/PowerToysRun-SSH"
-version = "v1.5.0"
+version = "v1.9.0"
 
 [plugins.Spotify]
 repo = "waaverecords/PowerToys-Run-Spotify"
-version = "v0.87.1"
+version = "v0.92.0"
 
 [plugins.UnicodeInput]
 repo = "nathancartlidge/powertoys-run-unicode"
@@ -68,7 +69,7 @@ version = "v1.3.0"
 
 [plugins.WebSearchShortcut]
 repo = "Daydreamer-riri/PowerToys-Run-WebSearchShortcut"
-version = "0.6.3"
+version = "CmdPal0.0.2"
 
 [plugins.Winget]
 repo = "bostrot/PowerToysRunPluginWinget"

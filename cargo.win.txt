@@ -1,0 +1,23 @@
+boulette v0.2.1 (https://github.com/pipelight/boulette#7cf40175):
+    boulette.exe
+cargo-binstall v1.14.1:
+    cargo-binstall.exe
+cargo-cache v0.8.3:
+    cargo-cache.exe
+cargo-edit v0.13.6:
+    cargo-add.exe
+    cargo-rm.exe
+    cargo-set-version.exe
+    cargo-upgrade.exe
+cargo-update v16.3.2:
+    cargo-install-update-config.exe
+    cargo-install-update.exe
+git-delta v0.18.2:
+    delta.exe
+lucky_commit v2.2.5:
+    lucky_commit.exe
+mergiraf v0.11.0:
+    mergiraf.exe
+    mgf_dev.exe
+taplo-cli v0.10.0:
+    taplo.exe

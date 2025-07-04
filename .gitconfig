@@ -1,122 +1,135 @@
 [alias]
-    fpush = push --force-with-lease
+  fpush = push --force-with-lease
 [branch]
-    sort = -committerdate
+  sort = -committerdate
 [color]
-    ui = auto
+  ui = auto
 [color "branch"]
-    current = cyan bold reverse
-    local = white
-    plain =
-    remote = cyan
+  current = cyan bold reverse
+  local = white
+  plain =
+  remote = cyan
 [color "diff"]
-    commit =
-    func = cyan
-    plain =
-    whitespace = magenta reverse
-    meta = white
-    frag = cyan bold reverse
-    old = red
-    new = green
+  commit =
+  func = cyan
+  plain =
+  whitespace = magenta reverse
+  meta = white
+  frag = cyan bold reverse
+  old = red
+  new = green
 [color "grep"]
-    context =
-    filename =
-    function =
-    linenumber = white
-    match =
-    selected =
-    separator =
+  context =
+  filename =
+  function =
+  linenumber = white
+  match =
+  selected =
+  separator =
 [color "interactive"]
-    error =
-    header =
-    help =
-    prompt =
+  error =
+  header =
+  help =
+  prompt =
 [color "status"]
-    added = green
-    changed = yellow
-    header =
-    localBranch =
-    nobranch =
-    remoteBranch = cyan bold
-    unmerged = magenta bold reverse
-    untracked = red
-    updated = green bold
+  added = green
+  changed = yellow
+  header =
+  localBranch =
+  nobranch =
+  remoteBranch = cyan bold
+  unmerged = magenta bold reverse
+  untracked = red
+  updated = green bold
 [column]
-    ui = always
+  ui = always
 [commit]
-    cleanup = whitespace
-    gpgsign = true
+  cleanup = whitespace
+  gpgsign = true
+  verbose = true
 [core]
-    autocrlf = input
-    commitGraph = true
-    eol = lf
-    fsmonitor = true
-    ignorecase = false
-    longpaths = true
-    pager = delta
-    progress = true
-    untrackedCache = true
+  autocrlf = input
+  commitGraph = true
+  editor = 'D:/EDM115/Programmes/Notepad++/notepad++.exe' -multiInst -notabbar
+  eol = lf
+  fsmonitor = true
+  ignorecase = false
+  longpaths = true
+  pager = delta
+  preloadIndex = true
+  progress = true
+  untrackedCache = true
 [delta]
-    light = false
-    navigate = true
-    syntax-theme = Dracula
+  light = false
+  navigate = true
+  syntax-theme = Dracula
 [diff]
-    algorithm = histogram
-    colorMoved = default
-    tool = difftastic
+  algorithm = histogram
+  colorMoved = default
+  mnemonicPrefix = true
+  renames = true
+  tool = difftastic
 [difftool]
-    prompt = false
+  prompt = false
 [difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
+  cmd = difft "$LOCAL" "$REMOTE"
 [feature]
-    manyFiles = true
+  manyFiles = true
 [fetch]
-    fsckObjects = true
-    writeCommitGraph = true
-[gc]
-    writeCommitGraph = true
+  all = true
+  fsckObjects = true
+  prune = true
+  pruneTags = true
+  writeCommitGraph = true
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    process = git-lfs filter-process
-    required = true
-    smudge = git-lfs smudge -- %f
+  clean = git-lfs clean -- %f
+  process = git-lfs filter-process
+  required = true
+  smudge = git-lfs smudge -- %f
+[gc]
+  writeCommitGraph = true
 [gitbutler]
-    aiModelProvider = openai
+  aiModelProvider = openai
+[gpg]
+  program = D:\\EDM115\\Programmes\\GnuPG\\bin\\gpg.exe
 [help]
-    autocorrect = 10
+  autocorrect = 10
 [http]
-    postBuffer = 2147483648
+  postBuffer = 2147483648
 [include]
-    path = ~/.gitconfig.local
+  path = ~/.gitconfig.local
 [index]
-    version = 4
+  version = 4
 [init]
-    defaultBranch = master
+  defaultBranch = master
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [merge]
-    conflictStyle = zdiff3
+  conflictStyle = zdiff3
 [pack]
-    usePathWalk = true
+  usePathWalk = true
 [pager]
-    difftool = true
+  difftool = true
 [pull]
-    rebase = false
+  rebase = false
 [push]
-    autoSetupRemote = true
-    default = current
-    verbose = true
+  autoSetupRemote = true
+  default = simple
+  followTags = true
+  verbose = true
+[rebase]
+  updateRefs = true
 [receive]
-    fsckObjects = true
+  fsckObjects = true
 [rerere]
-    autoUpdate = true
-    enabled = true
+  autoUpdate = true
+  enabled = true
 [tag]
-    forceSignAnnotated = true
-    sort = taggerdate
+  forceSignAnnotated = true
+  sort = version:refname
 [transfer]
-    fsckObjects = true
+  fsckObjects = true
 [url "https://github.com/dracula/"]
-    insteadOf = dracula://
+  insteadOf = dracula://
 [user]
-    name = EDM115
+  name = EDM115
