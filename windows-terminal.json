@@ -77,12 +77,17 @@
         "defaults": 
         {
             "autoMarkPrompts": true,
+            "bellStyle": 
+            [
+                "window",
+                "taskbar"
+            ],
             "colorScheme": "Dracula",
             "compatibility.allowDECRQCRA": true,
             "cursorShape": "underscore",
+            "experimental.rainbowSuggestions": true,
             "experimental.repositionCursorWithMouse": true,
             "experimental.retroTerminalEffect": false,
-            "experimental.rightClickContextMenu": false,
             "font": 
             {
                 "face": "FiraCode Nerd Font",
@@ -99,7 +104,9 @@
                     "ss09": 1
                 }
             },
+            "historySize": 100000,
             "opacity": 60,
+            "rightClickContextMenu": false,
             "showMarksOnScrollbar": true,
             "useAcrylic": true
         },
@@ -246,6 +253,7 @@
             "yellow": "#A2734C"
         }
     ],
+    "searchWebDefaultQueryUrl": "https://www.google.com/search?q=%22%s%22",
     "tabWidthMode": "titleLength",
     "theme": "dark",
     "themes": [],

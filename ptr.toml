@@ -9,7 +9,7 @@ version = "v1.10.0"
 
 [plugins.ChatGPT]
 repo = "ferraridavide/ChatGPTPowerToys"
-version = "v0.91.0"
+version = "v0.93.0"
 
 [plugins.ClipboardManager]
 repo = "CoreyHayward/PowerToys-Run-ClipboardManager"
@@ -61,7 +61,7 @@ version = "v1.9.0"
 
 [plugins.Spotify]
 repo = "waaverecords/PowerToys-Run-Spotify"
-version = "v0.92.0"
+version = "v0.95.0"
 
 [plugins.UnicodeInput]
 repo = "nathancartlidge/powertoys-run-unicode"
@@ -69,7 +69,7 @@ version = "v1.3.0"
 
 [plugins.WebSearchShortcut]
 repo = "Daydreamer-riri/PowerToys-Run-WebSearchShortcut"
-version = "CmdPal0.0.2"
+version = "CmdPal0.1.1"
 
 [plugins.Winget]
 repo = "bostrot/PowerToysRunPluginWinget"
