@@ -6,15 +6,15 @@
       "alignment": "left",
       "segments": [
         {
-          "background": "#282a36",
-          "foreground": "#f8f8f2",
+          "background": "#00040e",
+          "foreground": "#eae7de",
           "leading_diamond": "\ue0b6",
           "style": "diamond",
           "template": "{{ .UserName }}",
           "type": "session"
         },
         {
-          "background": "#282a36",
+          "background": "#00040e",
           "foreground": "#ff5555",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
@@ -22,8 +22,8 @@
           "type": "root"
         },
         {
-          "background": "#282a36",
-          "foreground": "#f8f8f2",
+          "background": "#00040e",
+          "foreground": "#eae7de",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": "{{ .Icon }}  ",
@@ -31,9 +31,9 @@
         },
         {
           "background": "#bd93f9",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "style": "full"
           },
           "style": "powerline",
@@ -42,33 +42,33 @@
         },
         {
           "background": "#ffb86c",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "branch_icon": "",
             "fetch_status": true,
             "fetch_upstream_icon": true
           },
           "style": "powerline",
-          "template": " \ue725 ({{ url .UpstreamIcon .UpstreamURL }} {{ url .HEAD .UpstreamURL }}){{ if gt .Ahead 0 }}<#50fa7b> +{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }}<#ff5555> -{{ .Behind }}</>{{ end }}{{ if .Working.Changed }}<#f8f8f2> \uf044 {{ .Working.String }}</>{{ end }}{{ if .Staging.Changed }}<#f8f8f2> \uf044 {{ .Staging.String }}</>{{ end }} ",
+          "template": " \ue725 ({{ url .UpstreamIcon .UpstreamURL }} {{ url .HEAD .UpstreamURL }}){{ if gt .Ahead 0 }}<#50fa7b> +{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }}<#ff5555> -{{ .Behind }}</>{{ end }}{{ if .Working.Changed }}<#00040e> \uf044 {{ .Working.String }}</>{{ end }}{{ if .Staging.Changed }}<#00040e> \uf044 {{ .Staging.String }}</>{{ end }} ",
           "type": "git"
         },
         {
           "background": "#50fa7b",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "cache_duration": "2h"
           },
           "style": "powerline",
-          "template": " \ue718 {{ .Full }} ",
+          "template": " \ued0d {{ .Full }} ",
           "type": "node"
         },
         {
           "background": "#ff5555",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "cache_duration": "2h",
             "display_mode": "files",
             "extensions": [
@@ -81,9 +81,9 @@
         },
         {
           "background": "#ffb86c",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "cache_duration": "2h",
             "display_mode": "files",
             "extensions": [
@@ -91,14 +91,61 @@
             ]
           },
           "style": "powerline",
-          "template": " \udb80\udec1 {{ .Full }} ",
+          "template": " \ue865 {{ .Full }} ",
           "type": "pnpm"
         },
         {
-          "background": "#50fa7b",
-          "foreground": "#282a36",
+          "background": "#ff79c6",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
+            "cache_duration": "2h",
+            "display_mode": "files",
+            "extensions": [
+              "bun.lockb",
+              "bun.lock"
+            ]
+          },
+          "style": "powerline",
+          "template": " \ue76f {{ .Full }} ",
+          "type": "bun"
+        },
+        {
+          "background": "#50fa7b",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
+            "cache_duration": "2h",
+            "display_mode": "files",
+            "extensions": [
+              "deno.json",
+              "deno.jsonc"
+            ]
+          },
+          "style": "powerline",
+          "template": "\ue7c0 {{ .Full }}",
+          "type": "deno"
+        },
+        {
+          "background": "#50fa7b",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
+            "cache_duration": "2h",
+            "display_mode": "files",
+            "extensions": [
+              "yarn.lock"
+            ]
+          },
+          "style": "powerline",
+          "template": "\ue8ec {{ .Full }}",
+          "type": "yarn"
+        },
+        {
+          "background": "#50fa7b",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
             "cache_duration": "2h",
             "display_mode": "files"
           },
@@ -108,9 +155,9 @@
         },
         {
           "background": "#ff79c6",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "cache_duration": "2h"
           },
           "style": "powerline",
@@ -118,22 +165,55 @@
           "type": "java"
         },
         {
-          "background": "#8be9fd",
-          "foreground": "#282a36",
+          "background": "#6272a4",
+          "foreground": "#eae7de",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
+            "cache_duration": "2h"
+          },
+          "style": "powerline",
+          "template": "\ue826 {{ .Full }}",
+          "type": "lua"
+        },
+        {
+          "background": "#ffb86c",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
+            "cache_duration": "2h"
+          },
+          "style": "powerline",
+          "template": "\ue7a8 {{ .Full }}",
+          "type": "rust"
+        },
+        {
+          "background": "#ffb86c",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
+            "cache_duration": "2h"
+          },
+          "style": "powerline",
+          "template": "\ue8ef {{ .Full }}",
+          "type": "zig"
+        },
+        {
+          "background": "#8be9fd",
+          "foreground": "#00040e",
+          "powerline_symbol": "\ue0b0",
+          "options": {
             "cache_duration": "2h",
             "display_mode": "files"
           },
           "style": "powerline",
-          "template": " \uf308 {{ .Context }} ",
+          "template": " \ue7b0 {{ .Context }} ",
           "type": "docker"
         },
         {
           "background": "#6272a4",
-          "foreground": "#f8f8f2",
+          "foreground": "#eae7de",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "cache_duration": "2h"
           },
           "style": "powerline",
@@ -142,9 +222,9 @@
         },
         {
           "background": "#f1fa8c",
-          "foreground": "#282a36",
+          "foreground": "#00040e",
           "powerline_symbol": "\ue0b0",
-          "properties": {
+          "options": {
             "time_format": "15:04:05"
           },
           "style": "powerline",
@@ -153,8 +233,8 @@
         },
         {
           "background": "#f1fa8c",
-          "foreground": "#282a36",
-          "properties": {
+          "foreground": "#00040e",
+          "options": {
             "always_enabled": true,
             "style": "austin",
             "threshold": 500
@@ -173,12 +253,13 @@
   "patch_pwsh_bleed": true,
   "secondary_prompt": {
     "background": "transparent",
-    "foreground": "#f8f8f2",
+    "foreground": "#eae7de",
     "template": "  \uf054  "
   },
+  "shell_integration": true,
   "transient_prompt": {
     "background": "transparent",
-    "foreground": "#f8f8f2",
+    "foreground": "#eae7de",
     "newline": true,
     "template": "  \uf506  {{ .AbsolutePWD }}\n  \uf4b5  "
   },
@@ -188,5 +269,5 @@
     "notice": false,
     "source": "cdn"
   },
-  "version": 3
+  "version": 4
 }

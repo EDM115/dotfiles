@@ -23,18 +23,18 @@
                 pictures                = '50fa7b'
                 videos                  = 'ffb86c'
                 movies                  = 'ffb86c'
-                media                   = 'f8f8f2'
+                media                   = 'eae7de'
                 music                   = 'ff79c6'
                 songs                   = 'ff79c6'
-                onedrive                = 'f8f8f2'
-                downloads               = 'f8f8f2'
+                onedrive                = 'eae7de'
+                downloads               = 'eae7de'
                 src                     = '50fa7b'
                 development             = '50fa7b'
                 projects                = '50fa7b'
                 bin                     = '8be9fd'
                 tests                   = '8be9fd'
                 windows                 = '8be9fd'
-                users                   = 'f8f8f2'
+                users                   = 'eae7de'
                 favorites               = 'f1fa8c'
                 output                  = '50fa7b'
                 '.config'               = '50fa7b'
@@ -42,8 +42,8 @@
                 '.vscode'               = '8be9fd'
                 '.vscode-insiders'      = '8be9fd'
                 '.git'                  = 'ff5555'
-                '.github'               = 'f8f8f2'
-                'github'                = 'f8f8f2'
+                '.github'               = 'eae7de'
+                'github'                = 'eae7de'
                 'node_modules'          = '50fa7b'
                 '.terraform'            = '6272a4'
                 '.azure'                = '8be9fd'
@@ -108,8 +108,8 @@
                 'bower.json'                    = 'ff5555'
 
                 # Conduct
-                'code_of_conduct.md'            = 'f8f8f2'
-                'code_of_conduct.txt'           = 'f8f8f2'
+                'code_of_conduct.md'            = 'eae7de'
+                'code_of_conduct.txt'           = 'eae7de'
 
                 # Docker
                 'Dockerfile'                    = '6272a4'
@@ -244,10 +244,10 @@
             '.cfg'                  = '6272a4'
 
             # Source Files
-            '.c'                    = 'f8f8f2'
-            '.cpp'                  = 'f8f8f2'
-            '.cxx'                  = 'f8f8f2'
-            '.c++'                  = 'f8f8f2'
+            '.c'                    = 'eae7de'
+            '.cpp'                  = 'eae7de'
+            '.cxx'                  = 'eae7de'
+            '.c++'                  = 'eae7de'
             '.go'                   = '6272a4'
             '.php'                  = 'bd93f9'
 
@@ -541,11 +541,11 @@
             '.bicep'                = '8be9fd'
 
             # Disk Image
-            '.vmdk'                 = 'f8f8f2'
-            '.vhd'                  = 'f8f8f2'
-            '.vhdx'                 = 'f8f8f2'
-            '.img'                  = 'f8f8f2'
-            '.iso'                  = 'f8f8f2'
+            '.vmdk'                 = 'eae7de'
+            '.vhd'                  = 'eae7de'
+            '.vhdx'                 = 'eae7de'
+            '.img'                  = 'eae7de'
+            '.iso'                  = 'eae7de'
 
             # R language
             '.R'                    = '6272a4'

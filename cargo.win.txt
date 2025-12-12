@@ -1,17 +1,17 @@
 boulette v0.2.1 (https://github.com/pipelight/boulette#7cf40175):
     boulette.exe
-cargo-binstall v1.15.10:
+cargo-binstall v1.16.3:
     cargo-binstall.exe
 cargo-cache v0.8.3:
     cargo-cache.exe
-cargo-edit v0.13.7:
+cargo-edit v0.13.8:
     cargo-add.exe
     cargo-rm.exe
     cargo-set-version.exe
     cargo-upgrade.exe
-cargo-insta v1.43.2:
+cargo-insta v1.44.3:
     cargo-insta.exe
-cargo-shear v1.6.2:
+cargo-shear v1.7.2:
     cargo-shear.exe
 cargo-update v18.0.0:
     cargo-install-update-config.exe
@@ -20,18 +20,16 @@ dprint v0.50.2:
     dprint.exe
 git-delta v0.18.2:
     delta.exe
-gitoxide v0.46.0:
+gitoxide v0.47.0:
     ein.exe
     gix.exe
-just v1.43.0:
-    just.exe
 lucky_commit v2.2.5:
     lucky_commit.exe
-mergiraf v0.15.0:
+mergiraf v0.16.1:
     mergiraf.exe
 taplo-cli v0.10.0:
     taplo.exe
-typos-cli v1.39.0:
+typos-cli v1.40.0:
     typos.exe
 watchexec-cli v2.3.2:
     watchexec.exe

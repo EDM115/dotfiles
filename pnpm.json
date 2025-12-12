@@ -5,45 +5,45 @@
     "dependencies": {
       "@anthropic-ai/claude-code": {
         "from": "@anthropic-ai/claude-code",
-        "version": "2.0.36",
-        "resolved": "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.36.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@anthropic-ai+claude-code@2.0.36\\node_modules\\@anthropic-ai\\claude-code"
+        "version": "2.0.67",
+        "resolved": "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.67.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@anthropic-ai+claude-code@2.0.67\\node_modules\\@anthropic-ai\\claude-code"
       },
       "@github/copilot": {
         "from": "@github/copilot",
-        "version": "0.0.354",
-        "resolved": "https://registry.npmjs.org/@github/copilot/-/copilot-0.0.354.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@github+copilot@0.0.354\\node_modules\\@github\\copilot"
+        "version": "0.0.369",
+        "resolved": "https://registry.npmjs.org/@github/copilot/-/copilot-0.0.369.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@github+copilot@0.0.369\\node_modules\\@github\\copilot"
       },
       "@google/gemini-cli": {
         "from": "@google/gemini-cli",
-        "version": "0.13.0",
-        "resolved": "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.13.0.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@google+gemini-cli@0.13.0_@_db7a87180928619a7c1cd591dc4aed1d\\node_modules\\@google\\gemini-cli"
+        "version": "0.20.0",
+        "resolved": "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.20.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@google+gemini-cli@0.20.0_@_2cf7ae7b9f8e75eaa1d4be08cbe9f1e7\\node_modules\\@google\\gemini-cli"
       },
       "@openai/codex": {
         "from": "@openai/codex",
-        "version": "0.56.0",
-        "resolved": "https://registry.npmjs.org/@openai/codex/-/codex-0.56.0.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@openai+codex@0.56.0\\node_modules\\@openai\\codex"
+        "version": "0.71.0",
+        "resolved": "https://registry.npmjs.org/@openai/codex/-/codex-0.71.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@openai+codex@0.71.0\\node_modules\\@openai\\codex"
       },
       "@typescript/native-preview": {
         "from": "@typescript/native-preview",
-        "version": "7.0.0-dev.20251109.1",
-        "resolved": "https://registry.npmjs.org/@typescript/native-preview/-/native-preview-7.0.0-dev.20251109.1.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@typescript+native-preview@7.0.0-dev.20251109.1\\node_modules\\@typescript\\native-preview"
+        "version": "7.0.0-dev.20251212.1",
+        "resolved": "https://registry.npmjs.org/@typescript/native-preview/-/native-preview-7.0.0-dev.20251212.1.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\@typescript+native-preview@7.0.0-dev.20251212.1\\node_modules\\@typescript\\native-preview"
       },
       "gitmoji-cli": {
         "from": "gitmoji-cli",
         "version": "9.7.0",
         "resolved": "https://registry.npmjs.org/gitmoji-cli/-/gitmoji-cli-9.7.0.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\gitmoji-cli@9.7.0_@types+node@24.10.0\\node_modules\\gitmoji-cli"
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\gitmoji-cli@9.7.0_@types+node@25.0.1\\node_modules\\gitmoji-cli"
       },
       "node-gyp": {
         "from": "node-gyp",
-        "version": "11.5.0",
-        "resolved": "https://registry.npmjs.org/node-gyp/-/node-gyp-11.5.0.tgz",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\node-gyp@11.5.0\\node_modules\\node-gyp"
+        "version": "12.1.0",
+        "resolved": "https://registry.npmjs.org/node-gyp/-/node-gyp-12.1.0.tgz",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\5\\.pnpm\\node-gyp@12.1.0\\node_modules\\node-gyp"
       },
       "tldr": {
         "from": "tldr",

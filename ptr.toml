@@ -33,11 +33,7 @@ version = "v4.0.1"
 
 [plugins.GitHubRepo]
 repo = "8LWXpg/PowerToysRun-GitHubRepo"
-version = "v1.12.0"
-
-[plugins.GitKraken]
-repo = "davidegiacometti/PowerToys-Run-GitKraken"
-version = "0.3.0"
+version = "v1.13.2"
 
 [plugins.HexInspector]
 repo = "NaroZeol/PowerHexInspector"
@@ -61,7 +57,7 @@ version = "v1.9.0"
 
 [plugins.Spotify]
 repo = "waaverecords/PowerToys-Run-Spotify"
-version = "v0.95.0"
+version = "v0.96.1"
 
 [plugins.UnicodeInput]
 repo = "nathancartlidge/powertoys-run-unicode"
