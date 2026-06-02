@@ -1,0 +1,77 @@
+windows_wsl_setup_acknowledged = true
+model = "gpt-5.5"
+personality = "pragmatic"
+sandbox_mode = "danger-full-access"
+model_reasoning_effort = "medium"
+approvals_reviewer = "user"
+
+[sandbox_workspace_write]
+network_access = true
+
+[windows]
+sandbox = "elevated"
+[agents]
+max_threads = 6
+max_depth = 2
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-01T19:42:57Z"
+source_type = "local"
+source = '\\?\C:\Users\EDM115\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[tui]
+theme = "dracula"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 2
+
+[features]
+js_repl = true
+memories = true
+external_migration = true
+prevent_idle_sleep = true
+terminal_resize_reflow = true
+network_proxy = true
+mentions_v2 = true
+
+[desktop]
+ambient-suggestions-enabled = false
+appearanceTheme = "dark"
+appearanceDarkCodeThemeId = "dracula"
+sansFontSize = 15
+codeFontSize = 14
+usePointerCursors = true
+followUpQueueMode = "steer"
+localeOverride = "en-US"
+git-create-pull-request-as-draft = true
+git-pull-request-merge-method = "squash"
+git-show-sidebar-pr-icons = true
+conversationDetailMode = "STEPS_COMMANDS"
+composerEnterBehavior = "cmdIfMultiline"
+hotkey-window-projectless-default-enabled = true
+dictationDictionary = []
+reduced-motion-preference = "system"
+keepRemoteControlAwakeWhilePluggedIn = true
+show-context-window-usage = true
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#ffb86c"
+contrast = 60
+ink = "#eae7de"
+opaqueWindows = false
+surface = "#00040e"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"FiraCode Nerd Font Propo"'
+ui = "Satoshi"
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#50fa7b"
+diffRemoved = "#ff5555"
+skill = "#bd93f9"

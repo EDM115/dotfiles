@@ -88,14 +88,12 @@
   smudge = git-lfs smudge -- %f
 [gc]
   writeCommitGraph = true
-[gitbutler]
-  aiModelProvider = openai
 [gpg]
-  program = D:\\EDM115\\Programmes\\GnuPG\\bin\\gpg.exe
+  program = D:/EDM115/Programmes/GnuPG/bin/gpg.exe
 [help]
   autocorrect = 10
 [http]
-  postBuffer = 2147483648
+  postBuffer = 104857600
 [include]
   path = ~/.gitconfig.local
 [index]
@@ -126,6 +124,7 @@
   enabled = true
 [tag]
   forceSignAnnotated = true
+  gpgsign = true
   sort = version:refname
 [transfer]
   fsckObjects = true

@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "async": true,
+  "async": false,
   "blocks": [
     {
       "alignment": "left",
