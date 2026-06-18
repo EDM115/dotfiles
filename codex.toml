@@ -1,9 +1,11 @@
 windows_wsl_setup_acknowledged = true
 model = "gpt-5.5"
-personality = "pragmatic"
-sandbox_mode = "danger-full-access"
 model_reasoning_effort = "medium"
 approvals_reviewer = "user"
+personality = "pragmatic"
+suppress_unstable_features_warning = true
+service_tier = "default"
+sandbox_mode = "workspace-write"
 
 [sandbox_workspace_write]
 network_access = true
@@ -15,33 +17,58 @@ max_threads = 6
 max_depth = 2
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-01T19:42:57Z"
+last_updated = "2026-06-17T18:21:26Z"
 source_type = "local"
 source = '\\?\C:\Users\EDM115\.codex\.tmp\bundled-marketplaces\openai-bundled'
 
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-03T08:29:02Z"
+source_type = "local"
+source = '\\?\C:\Users\EDM115\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
 [plugins."github@openai-curated"]
+enabled = true
+
+[plugins."atlassian-rovo@openai-curated"]
+enabled = true
+
+[plugins."codex-security@openai-curated"]
 enabled = true
 
 [plugins."browser@openai-bundled"]
 enabled = true
 
 [tui]
+terminal_title = ["activity", "project-name", "current-dir", "run-state", "context-remaining", "total-input-tokens", "total-output-tokens", "task-progress"]
 theme = "dracula"
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "pull-request-number", "branch-changes", "run-state", "context-window-size", "used-tokens", "task-progress"]
+status_line_use_colors = true
 
 [tui.model_availability_nux]
-"gpt-5.5" = 2
+"gpt-5.5" = 4
 
 [features]
-js_repl = true
 memories = true
+hooks = true
+apps = true
 external_migration = true
 prevent_idle_sleep = true
 terminal_resize_reflow = true
 network_proxy = true
 mentions_v2 = true
+js_repl = false
 
 [desktop]
-ambient-suggestions-enabled = false
+ambient-suggestions-enabled = true
 appearanceTheme = "dark"
 appearanceDarkCodeThemeId = "dracula"
 sansFontSize = 15
@@ -55,10 +82,10 @@ git-show-sidebar-pr-icons = true
 conversationDetailMode = "STEPS_COMMANDS"
 composerEnterBehavior = "cmdIfMultiline"
 hotkey-window-projectless-default-enabled = true
-dictationDictionary = []
 reduced-motion-preference = "system"
 keepRemoteControlAwakeWhilePluggedIn = true
 show-context-window-usage = true
+appearanceDiffMarkerStyle = "color"
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#ffb86c"

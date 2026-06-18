@@ -1,0 +1,225 @@
+{
+  "agent": {
+    "default_profile": "minimal",
+    "dock": "right",
+    "message_editor_min_lines": 3,
+    "model_parameters": [],
+    "show_turn_stats": true,
+    "sidebar_side": "right",
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": "^sed\\b"
+            },
+            {
+              "pattern": "^grep\\b"
+            },
+            {
+              "pattern": "^wc\\b"
+            },
+            {
+              "pattern": "^head\\b"
+            },
+            {
+              "pattern": "^tail\\b"
+            },
+            {
+              "pattern": "^echo\\s+===(\\s|$)"
+            }
+          ]
+        }
+      }
+    },
+    "use_modifier_to_send": true
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "default_config_options": {
+        "reasoning_effort": "high"
+      },
+      "favorite_config_option_values": {
+        "model": [
+          "gpt-5.5"
+        ]
+      },
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "github-copilot-cli": {
+      "type": "registry"
+    },
+    "opencode": {
+      "type": "registry"
+    }
+  },
+  "auto_indent_on_paste": false,
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_family": "Fira Code",
+  "buffer_font_size": 14.0,
+  "context_servers": {
+    "github": {
+      "enabled": true,
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "mcp-server-context7": {
+      "enabled": true,
+      "remote": false
+    }
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "edit_predictions": {
+    "allow_data_collection": "yes"
+  },
+  "ensure_final_newline_on_save": true,
+  "file_types": {
+    "css": [
+      "*.css"
+    ],
+    "html": [
+      "*.html"
+    ],
+    "jsonc": [
+      "*.json5"
+    ],
+    "python": [
+      "*.py"
+    ]
+  },
+  "format_on_save": "off",
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "git_panel": {
+    "collapse_untracked_diff": true,
+    "dock": "left",
+    "fallback_branch_name": "master",
+    "file_icons": true,
+    "show_count_badge": true,
+    "tree_view": true
+  },
+  "hide_mouse": "never",
+  "icon_theme": "Zed (Default)",
+  "inlay_hints": {
+    "enabled": true,
+    "show_background": false
+  },
+  "languages": {
+    "C++": {
+      "remove_trailing_whitespace_on_save": false
+    },
+    "Python": {
+      "language_servers": [
+        "basedpyright",
+        "ty"
+      ]
+    }
+  },
+  "line_ending": "prefer_lf",
+  "linked_edits": true,
+  "lsp": {
+    "clangd": {
+      "initialization_options": {
+        "fallbackFlags": [
+          "-Iinclude",
+          "-Isrc",
+          "-ID:/EDM115/Programmes/Windhawk/Compiler/include",
+          "-std=c++20"
+        ]
+      }
+    },
+    "discord_presence": {
+      "initialization_options": {
+        "application_id": "1263505205522337886",
+        "base_icons_url": "https://raw.githubusercontent.com/xhyrom/zed-discord-presence/main/assets/icons/",
+        "details": "In {workspace}",
+        "git_integration": true,
+        "idle": {
+          "action": "change_activity",
+          "details": "In Zed",
+          "large_image": "{base_icons_url}/zed.png",
+          "large_text": "Zed",
+          "small_image": "{base_icons_url}/idle.png",
+          "small_text": "Idle",
+          "state": "Idling",
+          "timeout": 300
+        },
+        "large_image": "{base_icons_url}/{language:lo}.png",
+        "large_text": "{language:u}",
+        "small_image": "{base_icons_url}/zed.png",
+        "small_text": "Zed",
+        "state": "Working on {filename}"
+      }
+    }
+  },
+  "minimap": {
+    "show": "always",
+    "thumb": "always"
+  },
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "outline_panel": {
+    "dock": "left"
+  },
+  "preview_tabs": {
+    "enable_preview_from_file_finder": true
+  },
+  "project_panel": {
+    "auto_fold_dirs": false,
+    "diagnostic_badges": true,
+    "dock": "left",
+    "git_status_indicator": true,
+    "hide_root": true,
+    "scrollbar": {
+      "horizontal_scroll": true
+    }
+  },
+  "redact_private_values": true,
+  "remove_trailing_whitespace_on_save": false,
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "show_edit_predictions": true,
+  "soft_wrap": "editor_width",
+  "status_bar": {
+    "line_endings_button": true,
+    "show_active_file": false
+  },
+  "tab_size": 2,
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+  "terminal": {
+    "blinking": "on",
+    "copy_on_select": true,
+    "cursor_shape": "underline",
+    "env": {},
+    "font_family": "FiraCode Nerd Font Propo",
+    "max_scroll_history_lines": 100000,
+    "show_count_badge": true
+  },
+  "theme": "Dracula Pro (Van Helsing)",
+  "title_bar": {
+    "show_branch_status_icon": true,
+    "show_menus": true
+  },
+  "ui_font_size": 16.0,
+  "use_on_type_format": false
+}

@@ -1,6 +1,6 @@
 boulette v0.2.1 (https://github.com/pipelight/boulette#7cf40175):
     boulette.exe
-cargo-binstall v1.19.1:
+cargo-binstall v1.20.0:
     cargo-binstall.exe
 cargo-cache v0.8.3:
     cargo-cache.exe
@@ -11,7 +11,7 @@ cargo-edit v0.13.11:
     cargo-upgrade.exe
 cargo-outdated v0.19.0:
     cargo-outdated.exe
-cargo-update v20.0.0:
+cargo-update v20.0.2:
     cargo-install-update-config.exe
     cargo-install-update.exe
 dprint v0.54.0:
@@ -27,7 +27,7 @@ mergiraf v0.17.0:
     mergiraf.exe
 rust-stakeholder v0.1.0 (https://github.com/giacomo-b/rust-stakeholder.git#52f64ad3):
     rust-stakeholder.exe
-shell-ai v0.7.2:
+shell-ai v0.7.3:
     shell-ai.exe
 taplo-cli v0.10.0:
     taplo.exe

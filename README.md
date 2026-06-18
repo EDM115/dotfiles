@@ -29,7 +29,6 @@ Folders :
 Files :
 - [`cargo.win.txt`](cargo.win.txt) : List of Rust packages (`cargo install --list > cargo.win.txt`)
 - [`dracula.psd1`](dracula.psd1) : Dracula colorscheme for [Terminal-Icons](https://github.com/devblackops/Terminal-Icons)
-- [`ptr.toml`](ptr.toml) : Installed PowerToys Run plugins, comes from `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\version.toml`. Tool : [8LWXpg/ptr](https://github.com/8LWXpg/ptr)
 - [`windows-terminal.json`](windows-terminal.json) : Config for the Windows Terminal
 - [`winget.txt`](winget.txt) : Installed winget packages. Obtained through `Get-WinGetPackage | Format-Table -AutoSize | Out-File -Width 500 -FilePath winget.txt`
 
@@ -45,9 +44,10 @@ Files :
 - [`Microsoft.PowerShell_profile.ps1`](Microsoft.PowerShell_profile.ps1) : PowerShell profile. Includes : Oh My Posh, Terminal-Icons, Github Copilot, hcloud, [sudo-like](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed) and more
 - [`pnpm.json`](pnpm.json) : List of globally installed PNPM packages (`pnpm ls -g --json > pnpm.json`)
 - [`pip.txt`](pip.txt) : List of installed Pip packages (`pip freeze > pip.txt`)
-- [`powershell.config.json`](powershell.config.json) : PowerShell configuration file (in `Split-Path $PROFILE.CurrentUserCurrentHost` so far)
+- [`powershell.config.json`](powershell.config.json) : PowerShell configuration file (`Split-Path $PROFILE.CurrentUserCurrentHost`)
 - [`vscode-extensions.txt`](vscode-extensions.txt) : List of VSCode extensions. Reinstall with [this script](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261)
 - [`vscode-settings.json`](vscode-settings.json) : VSCode settings
+- [`zed-settings.json`](zed-settings.json) : Zed settings
 
 Folders :
 - [`omp/`](omp/) : Oh My Posh themes ([source](https://github.com/EDM115/EDM115-ohmyposh-theme))

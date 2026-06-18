@@ -5,23 +5,23 @@
     "dependencies": {
       "@pnpm/exe": {
         "from": "@pnpm/exe",
-        "version": "11.5.0",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\2b4c-19e89d6ba3b\\node_modules\\@pnpm\\exe"
+        "version": "11.7.0",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385c89\\node_modules\\@pnpm\\exe"
       },
       "node-gyp": {
         "from": "node-gyp",
-        "version": "12.3.0",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\2b4c-19e89d6acc4\\node_modules\\node-gyp"
+        "version": "13.0.0",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed738541b\\node_modules\\node-gyp"
       },
       "portless": {
         "from": "portless",
-        "version": "0.13.1",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\2b4c-19e89d6b92a\\node_modules\\portless"
+        "version": "0.14.0",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385b8b\\node_modules\\portless"
       },
       "skills": {
         "from": "skills",
-        "version": "1.5.9",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\2b4c-19e89d6b862\\node_modules\\skills"
+        "version": "1.5.11",
+        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385ac5\\node_modules\\skills"
       }
     }
   }
