@@ -59,6 +59,7 @@
   preloadIndex = true
   progress = true
   untrackedCache = true
+  sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 [delta]
   light = false
   navigate = true
@@ -124,7 +125,7 @@
   enabled = true
 [tag]
   forceSignAnnotated = true
-  gpgsign = true
+  gpgSign = true
   sort = version:refname
 [transfer]
   fsckObjects = true

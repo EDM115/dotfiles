@@ -2,6 +2,10 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
+if ($PSStyle.Progress.PSObject.Properties["UseOSCIndicator"]) {
+  $PSStyle.Progress.UseOSCIndicator = $true
+}
+
 # alias code to code-insiders
 function code {
   code-insiders $args
@@ -12,9 +16,9 @@ function dx {
   deno x $args
 }
 
-if ($env:TERM_PROGRAM -ne "vscode" -and $env:TERM_PROGRAM -ne "zed")  {
+if ($env:TERM_PROGRAM -ne "vscode" -and $env:TERM_PROGRAM -ne "zed" -and $env:CODEX_CI -ne "1")  {
   # OMP config, breaks copilot when present
-  oh-my-posh init pwsh --config "D:\EDM115\Documents\Projects\dotfiles\omp\EDM115-newline.omp.json" | Invoke-Expression
+  oh-my-posh init pwsh --config "$env:USERPROFILE\omp\EDM115-newline.omp.json" | Invoke-Expression
 }
 
 # sudo in Windows
@@ -42,6 +46,24 @@ function sudo {
 
   # Use Start-Process to execute the command in a new elevated PowerShell instance
   Start-Process pwsh -ArgumentList @("-ExecutionPolicy", "Bypass", "-EncodedCommand", $encodedCommand) -Verb RunAs
+}
+
+# load a .env into the shell
+function loadenv {
+  Get-Content -LiteralPath '.env' | Where-Object {
+    $_ -and $_ -notmatch '^\s*#'
+  } | ForEach-Object {
+    if ($_ -match '^\s*([^=]+?)\s*=\s*(.*)\s*$') {
+      $name = $matches[1].Trim()
+      $value = $matches[2].Trim()
+      
+      if (($value.StartsWith('"') -and $value.EndsWith('"')) -or ($value.StartsWith("'") -and $value.EndsWith("'"))) {
+        $value = $value.Substring(1, $value.Length - 2)
+      }
+      
+      [System.Environment]::SetEnvironmentVariable($name, $value, 'Process')
+    }
+  }
 }
 
 # git-pulls
@@ -120,6 +142,35 @@ function git-diffs {
       @{Name='TotalLines'; Expression={ $_.Value.LinesAdded + $_.Value.LinesRemoved }}
     | Sort-Object TotalLines -Descending
     | Format-Table -AutoSize
+}
+
+# Staged + unstaged change counts
+function git-changes {
+  $added = 0
+  $deleted = 0
+
+  # Staged + unstaged changes to tracked files
+  git diff HEAD --numstat | ForEach-Object {
+    $columns = $_ -split "`t"
+
+    if (
+      $columns.Count -ge 2 -and
+      $columns[0] -match '^\d+$' -and
+      $columns[1] -match '^\d+$'
+    ) {
+      $added += [int]$columns[0]
+      $deleted += [int]$columns[1]
+    }
+  }
+
+  # Untracked files, excluding files ignored by Git
+  git ls-files --others --exclude-standard | ForEach-Object {
+    $lineCount = (Get-Content -LiteralPath $_ -ErrorAction SilentlyContinue | Measure-Object -Line).Lines
+
+    $added += $lineCount
+  }
+
+  "+$added -$deleted"
 }
 
 # get-path
@@ -380,7 +431,7 @@ function downloadURL {
         Write-Progress -Activity $activity -Status $status -PercentComplete $pct
       } else {
         $status = ("{0:N2} MB downloaded @ {1:N1} MB/s" -f ($downloaded/1MB), $speedMBs)
-        Write-Progress -Activity $activity -Status $status
+        Write-Progress -Activity $activity -Status $status -PercentComplete -1
       }
     }
   } catch [System.OperationCanceledException], [System.Management.Automation.PipelineStoppedException] {
@@ -480,11 +531,11 @@ function Get-CodexTerminalModel {
     $env:CT_MODEL.ToLowerInvariant()
   } else {
     # Good default and cheap
-    "gpt-5.4-mini"
+    "gpt-5.6-luna"
   }
 
   # Until we can reliably list them
-  $allowed = @("gpt-5.3-codex-spark", "gpt-5.4-mini", "gpt-5.4", "gpt-5.5")
+  $allowed = @("gpt-5.3-codex-spark", "gpt-5.4-mini", "gpt-5.4", "gpt-5.5", "gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol", "gpt-6-astra")
 
   if ($model -notin $allowed) {
     throw "Invalid CT_MODEL ($model), supported values : $($allowed -join ', ')"
@@ -504,13 +555,32 @@ function Get-CodexTerminalEffort {
     "medium"
   }
 
-  $allowed = @("none", "low", "medium", "high", "xhigh")
+  $allowed = @("none", "low", "medium", "high", "xhigh", "max")
 
   if ($effort -notin $allowed) {
     throw "Invalid CT_EFFORT ($effort), supported values : $($allowed -join ', ')"
   }
 
   return $effort
+}
+
+function Get-CodexTerminalTier {
+  [CmdletBinding()]
+  param()
+
+  $tier = if ($env:CT_TIER) {
+    $env:CT_TIER.ToLowerInvariant()
+  } else {
+    "default"
+  }
+
+  $allowed = @("default", "fast", "priority", "flex")
+
+  if ($tier -notin $allowed) {
+    throw "Invalid CT_TIER ($tier), supported values : $($allowed -join ', ')"
+  }
+
+  return $tier
 }
 
 function Get-CodexTerminalDefaultAction {
@@ -530,6 +600,44 @@ function Get-CodexTerminalDefaultAction {
   }
 
   return $action
+}
+
+function Get-CodexTerminalAskDefaultAction {
+  [CmdletBinding()]
+  param()
+
+  $action = if ($env:CT_ASK_ACTION) {
+    $env:CT_ASK_ACTION.ToLowerInvariant()
+  } else {
+    "reply"
+  }
+
+  $allowed = @("reply", "copy", "exit")
+
+  if ($action -notin $allowed) {
+    throw "Invalid CT_ASK_ACTION ($action), supported values : $($allowed -join ', ')"
+  }
+
+  return $action
+}
+
+function Get-CodexTerminalAskThreadDisposition {
+  [CmdletBinding()]
+  param()
+
+  $disposition = if ($env:CT_ASK_THREAD) {
+    $env:CT_ASK_THREAD.ToLowerInvariant()
+  } else {
+    "keep"
+  }
+
+  $allowed = @("keep", "archive", "delete")
+
+  if ($disposition -notin $allowed) {
+    throw "Invalid CT_ASK_THREAD ($disposition), supported values : $($allowed -join ', ')"
+  }
+
+  return $disposition
 }
 
 function Get-CodexTerminalVerbose {
@@ -783,9 +891,14 @@ function ConvertFrom-CodexExecOutput {
   if ($raw -match '(?m)^\s*tokens used\s*$\r?\n\s*(?<v>[^\r\n]+)\s*$') {
     $tokensUsed = Format-CodexNumber $Matches.v.Trim()
   }
+  
+  $codexBlocks = [regex]::Matches(
+    $raw,
+    '(?ms)^\s*codex\s*\r?\n(?<answer>.*?)(?=^\s*(?:exec(?:\s.*)?|hook:.*|user|codex|tokens used)\s*$|\z)'
+  )
 
-  if ($raw -match '(?ms)^\s*codex\s*\r?\n(?<answer>.*?)(?:\r?\n)?^\s*tokens used\s*$') {
-    $answer = $Matches.answer.Trim()
+  if ($codexBlocks.Count -gt 0) {
+    $answer = $codexBlocks[$codexBlocks.Count - 1].Groups["answer"].Value.Trim()
   }
 
   return [pscustomobject]@{
@@ -806,9 +919,15 @@ function New-CodexTerminalStatsBag {
     Turns = 0
     TotalDuration = [TimeSpan]::Zero
     TotalTokens = 0
+    TotalInputTokens = 0
+    TotalCachedInputTokens = 0
+    TotalOutputTokens = 0
+    TotalReasoningOutputTokens = 0
     LastVersion = $null
     LastModel = $null
     LastEffort = $null
+    LastTier = $null
+    ThreadId = $null
     TurnStats = @()
   }
 }
@@ -874,6 +993,147 @@ function Add-CodexTerminalTurnStats {
   }
 }
 
+function Get-CodexTerminalJsonErrorText {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [object] $Event
+  )
+
+  if ($Event.error) {
+    if ($Event.error.message) {
+      return [string] $Event.error.message
+    }
+
+    if ($Event.error -is [string]) {
+      return [string] $Event.error
+    }
+  }
+
+  if ($Event.message) {
+    return [string] $Event.message
+  }
+
+  try {
+    return ($Event | ConvertTo-Json -Depth 20 -Compress)
+  } catch {
+    return "Unknown Codex error"
+  }
+}
+
+function ConvertFrom-CodexJsonLines {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [AllowEmptyString()]
+    [string] $Text
+  )
+
+  $threadId = $null
+  $assistantMessages = [System.Collections.Generic.List[string]]::new()
+  $errors = [System.Collections.Generic.List[string]]::new()
+  $invalidLines = [System.Collections.Generic.List[string]]::new()
+  $usage = [pscustomobject]@{
+    InputTokens = 0L
+    CachedInputTokens = 0L
+    OutputTokens = 0L
+    ReasoningOutputTokens = 0L
+  }
+
+  foreach ($line in ($Text -split "\r?\n")) {
+    if ([string]::IsNullOrWhiteSpace($line)) {
+      continue
+    }
+
+    try {
+      $event = $line | ConvertFrom-Json -Depth 100 -ErrorAction Stop
+    } catch {
+      $invalidLines.Add($line)
+      continue
+    }
+
+    switch ([string] $event.type) {
+      "thread.started" {
+        if ($event.thread_id) {
+          $threadId = [string] $event.thread_id
+        }
+      }
+      "item.completed" {
+        if ($event.item -and $event.item.type -eq "agent_message" -and $null -ne $event.item.text) {
+          $assistantMessages.Add([string] $event.item.text)
+        }
+      }
+      "turn.completed" {
+        if ($event.usage) {
+          $usage.InputTokens = [int64] $event.usage.input_tokens
+          $usage.CachedInputTokens = [int64] $event.usage.cached_input_tokens
+          $usage.OutputTokens = [int64] $event.usage.output_tokens
+          $usage.ReasoningOutputTokens = [int64] $event.usage.reasoning_output_tokens
+        }
+      }
+      "turn.failed" {
+        $errors.Add((Get-CodexTerminalJsonErrorText -Event $event))
+      }
+      "error" {
+        $errors.Add((Get-CodexTerminalJsonErrorText -Event $event))
+      }
+    }
+  }
+
+  $answer = if ($assistantMessages.Count -gt 0) {
+    $assistantMessages[$assistantMessages.Count - 1]
+  } else {
+    ""
+  }
+
+  return [pscustomobject]@{
+    ThreadId = $threadId
+    Answer = Repair-CodexTextEncoding $answer
+    Usage = $usage
+    Errors = @($errors)
+    InvalidLines = @($invalidLines)
+  }
+}
+
+function Add-CodexTerminalJsonTurnStats {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [pscustomobject] $Stats,
+
+    [Parameter(Mandatory)]
+    [pscustomobject] $Turn
+  )
+
+  $inputTokens = [int64] $Turn.Usage.InputTokens
+  $cachedInputTokens = [int64] $Turn.Usage.CachedInputTokens
+  $outputTokens = [int64] $Turn.Usage.OutputTokens
+  $reasoningOutputTokens = [int64] $Turn.Usage.ReasoningOutputTokens
+  $turnTokens = $inputTokens + $outputTokens
+
+  $Stats.Turns++
+  $Stats.TotalDuration = $Stats.TotalDuration + $Turn.Duration
+  $Stats.TotalTokens += $turnTokens
+  $Stats.TotalInputTokens += $inputTokens
+  $Stats.TotalCachedInputTokens += $cachedInputTokens
+  $Stats.TotalOutputTokens += $outputTokens
+  $Stats.TotalReasoningOutputTokens += $reasoningOutputTokens
+
+  if ($Turn.ThreadId) {
+    $Stats.ThreadId = $Turn.ThreadId
+  }
+
+  $Stats.TurnStats += [pscustomobject]@{
+    Turn = $Stats.Turns
+    Duration = $Turn.Duration
+    Tokens = $turnTokens
+    InputTokens = $inputTokens
+    CachedInputTokens = $cachedInputTokens
+    OutputTokens = $outputTokens
+    ReasoningOutputTokens = $reasoningOutputTokens
+  }
+}
+
 function Format-CodexTerminalDuration {
   [CmdletBinding()]
   param(
@@ -934,6 +1194,77 @@ function Write-CodexTerminalFinalVerboseHeader {
   Write-Host ""
 }
 
+function Write-CodexTerminalAskVerboseHeader {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [pscustomobject] $Stats,
+
+    [Parameter(Mandatory)]
+    [string] $Model,
+
+    [Parameter(Mandatory)]
+    [string] $Effort,
+
+    [Parameter(Mandatory)]
+    [string] $Tier,
+
+    [Parameter(Mandatory)]
+    [string] $ThreadDisposition
+  )
+
+  $border = $PSStyle.Foreground.BrightCyan
+  $label = $PSStyle.Foreground.BrightBlue
+  $value = $PSStyle.Foreground.BrightWhite
+  $muted = $PSStyle.Foreground.BrightBlack
+  $reset = $PSStyle.Reset
+
+  $cachePct = if ($Stats.TotalInputTokens -gt 0) {
+    100.0 * $Stats.TotalCachedInputTokens / $Stats.TotalInputTokens
+  } else {
+    0.0
+  }
+
+  Write-Host ""
+  Write-Host "$border╭─ Codex Ask stats ──────────────────$reset"
+  Write-Host "$border│ $label Model          : $value$Model$reset"
+  Write-Host "$border│ $label Effort         : $value$Effort$reset"
+  Write-Host "$border│ $label Service tier   : $value$Tier$reset"
+  Write-Host "$border│ $label Turns          : $value$($Stats.Turns)$reset"
+  Write-Host "$border│ $label Total time     : $value$(Format-CodexTerminalDuration $Stats.TotalDuration)$reset"
+  Write-Host "$border│ $label Input tokens   : $value$('{0:n0}' -f $Stats.TotalInputTokens)$reset"
+  Write-Host "$border│ $label Cached input   : $value$('{0:n0}' -f $Stats.TotalCachedInputTokens)$reset $muted($('{0:n1}' -f $cachePct)%)$reset"
+  Write-Host "$border│ $label Output tokens  : $value$('{0:n0}' -f $Stats.TotalOutputTokens)$reset"
+
+  if ($Stats.TotalReasoningOutputTokens -gt 0) {
+    Write-Host "$border│ $label Reasoning out  : $value$('{0:n0}' -f $Stats.TotalReasoningOutputTokens)$reset"
+  }
+
+  if ($Stats.ThreadId) {
+    Write-Host "$border│ $label Thread         : $value$($Stats.ThreadId)$reset"
+  }
+
+  Write-Host "$border│ $label On exit        : $value$ThreadDisposition$reset"
+
+  if ($Stats.TurnStats.Count -gt 1) {
+    Write-Host "$border│$reset"
+
+    foreach ($turn in $Stats.TurnStats) {
+      $durationText = Format-CodexTerminalDuration $turn.Duration
+      $cachedText = if ($turn.InputTokens -gt 0) {
+        "{0:n1}% cached" -f (100.0 * $turn.CachedInputTokens / $turn.InputTokens)
+      } else {
+        "0.0% cached"
+      }
+
+      Write-Host "$border│ $muted Turn $($turn.Turn) : $durationText - $($turn.InputTokens) in / $($turn.OutputTokens) out - $cachedText$reset"
+    }
+  }
+
+  Write-Host "$border╰────────────────────────────────────$reset"
+  Write-Host ""
+}
+
 function Write-CodexCyanDotsWhileWaiting {
   [CmdletBinding()]
   param(
@@ -983,6 +1314,8 @@ function Invoke-CodexWithSpinner {
     [string] $Model = $(Get-CodexTerminalModel),
 
     [string] $Effort = $(Get-CodexTerminalEffort),
+  
+  [string] $Tier = $(Get-CodexTerminalTier),
 
     [Parameter(Mandatory)]
     [string] $SpinnerMessage,
@@ -1000,6 +1333,8 @@ function Invoke-CodexWithSpinner {
   $null = $psi.ArgumentList.Add($Model)
   $null = $psi.ArgumentList.Add("-c")
   $null = $psi.ArgumentList.Add("model_reasoning_effort=$Effort")
+  $null = $psi.ArgumentList.Add("-c")
+  $null = $psi.ArgumentList.Add("service_tier=$Tier")
   $null = $psi.ArgumentList.Add($Prompt)
 
   $psi.UseShellExecute = $false
@@ -1044,6 +1379,223 @@ function Invoke-CodexWithSpinner {
     Combined = $combined
     Duration = $sw.Elapsed
     Parsed = $parsed
+  }
+}
+
+function ConvertTo-CodexTomlString {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [AllowEmptyString()]
+    [string] $Text
+  )
+
+  # JSON string escaping is compatible with the TOML basic-string escapes needed here
+  return (ConvertTo-Json -InputObject $Text -Compress)
+}
+
+function Invoke-CodexJsonTurnWithSpinner {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $Prompt,
+
+    [string] $ThreadId,
+
+    [string] $Model = $(Get-CodexTerminalModel),
+
+    [string] $Effort = $(Get-CodexTerminalEffort),
+
+    [string] $Tier = $(Get-CodexTerminalTier),
+
+    [Parameter(Mandatory)]
+    [string] $DeveloperInstructions,
+
+    [Parameter(Mandatory)]
+    [string] $SpinnerMessage,
+
+    [int] $SpinnerIntervalMs = 220
+  )
+
+  $psi = [System.Diagnostics.ProcessStartInfo]::new()
+  $psi.FileName = "codex"
+
+  $null = $psi.ArgumentList.Add("exec")
+  $null = $psi.ArgumentList.Add("--json")
+  $null = $psi.ArgumentList.Add("--skip-git-repo-check")
+  $null = $psi.ArgumentList.Add("--model")
+  $null = $psi.ArgumentList.Add($Model)
+  $null = $psi.ArgumentList.Add("-c")
+  $null = $psi.ArgumentList.Add("model_reasoning_effort=$Effort")
+  $null = $psi.ArgumentList.Add("-c")
+  $null = $psi.ArgumentList.Add("service_tier=$Tier")
+  $null = $psi.ArgumentList.Add("-c")
+  $null = $psi.ArgumentList.Add("developer_instructions=$(ConvertTo-CodexTomlString -Text $DeveloperInstructions)")
+
+  if ($ThreadId) {
+    $null = $psi.ArgumentList.Add("resume")
+    $null = $psi.ArgumentList.Add($ThreadId)
+  }
+
+  $null = $psi.ArgumentList.Add($Prompt)
+
+  $psi.UseShellExecute = $false
+  $psi.CreateNoWindow = $true
+  $psi.RedirectStandardOutput = $true
+  $psi.RedirectStandardError = $true
+  $psi.StandardOutputEncoding = [System.Text.UTF8Encoding]::new($false)
+  $psi.StandardErrorEncoding = [System.Text.UTF8Encoding]::new($false)
+
+  $p = [System.Diagnostics.Process]::new()
+  $p.StartInfo = $psi
+  $sw = [System.Diagnostics.Stopwatch]::StartNew()
+  $started = $false
+
+  try {
+    if (-not $p.Start()) {
+      throw "❌ Failed to start codex"
+    }
+
+    $started = $true
+    $outTask = $p.StandardOutput.ReadToEndAsync()
+    $errTask = $p.StandardError.ReadToEndAsync()
+
+    try {
+      Write-CodexCyanDotsWhileWaiting -Process $p -Message $SpinnerMessage -IntervalMs $SpinnerIntervalMs
+      $p.WaitForExit()
+      [System.Threading.Tasks.Task]::WaitAll(@($outTask, $errTask))
+    } catch {
+      if (-not $p.HasExited) {
+        try {
+          $p.Kill($true)
+          $p.WaitForExit()
+        } catch { }
+      }
+
+      throw
+    }
+
+    $sw.Stop()
+
+    $stdout = Repair-CodexTextEncoding ($outTask.Result ?? "")
+    $stderr = Repair-CodexTextEncoding ($errTask.Result ?? "")
+    $parsed = ConvertFrom-CodexJsonLines -Text $stdout
+
+    if ($p.ExitCode -ne 0) {
+      $detail = if ($parsed.Errors.Count -gt 0) {
+        $parsed.Errors -join "`n"
+      } elseif (-not [string]::IsNullOrWhiteSpace($stderr)) {
+        $stderr.Trim()
+      } else {
+        "Codex exited with code $($p.ExitCode)"
+      }
+
+      throw $detail
+    }
+
+    if ($parsed.Errors.Count -gt 0) {
+      throw ($parsed.Errors -join "`n")
+    }
+
+    if ($parsed.InvalidLines.Count -gt 0) {
+      $sample = $parsed.InvalidLines[0]
+      throw "Unexpected non-JSON output from codex --json : $sample"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($parsed.Answer)) {
+      throw "Codex completed without an assistant message"
+    }
+
+    if ($ThreadId -and $parsed.ThreadId -and $parsed.ThreadId -ne $ThreadId) {
+      throw "Codex resumed a different thread than requested (expected $ThreadId, got $($parsed.ThreadId)), aborting to avoid silently forking the conversation"
+    }
+
+    if (-not $parsed.ThreadId) {
+      throw "Codex did not return a thread_id in JSON mode"
+    }
+
+    return [pscustomobject]@{
+      ThreadId = $parsed.ThreadId
+      Answer = $parsed.Answer
+      Usage = $parsed.Usage
+      Duration = $sw.Elapsed
+      StdOut = $stdout
+      StdErr = $stderr
+    }
+  } finally {
+    if ($sw.IsRunning) {
+      $sw.Stop()
+    }
+
+    if ($started -and -not $p.HasExited) {
+      try {
+        $p.Kill($true)
+        $p.WaitForExit()
+      } catch { }
+    }
+
+    $p.Dispose()
+  }
+}
+
+function Invoke-CodexTerminalThreadDisposition {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $ThreadId,
+
+    [Parameter(Mandatory)]
+    [ValidateSet("keep", "archive", "delete")]
+    [string] $Disposition
+  )
+
+  if ($Disposition -eq "keep") {
+    return
+  }
+
+  $psi = [System.Diagnostics.ProcessStartInfo]::new()
+  $psi.FileName = "codex"
+
+  if ($Disposition -eq "archive") {
+    $null = $psi.ArgumentList.Add("archive")
+    $null = $psi.ArgumentList.Add($ThreadId)
+  } else {
+    $null = $psi.ArgumentList.Add("delete")
+    $null = $psi.ArgumentList.Add("--force")
+    $null = $psi.ArgumentList.Add($ThreadId)
+  }
+
+  $psi.UseShellExecute = $false
+  $psi.CreateNoWindow = $true
+  $psi.RedirectStandardOutput = $true
+  $psi.RedirectStandardError = $true
+  $psi.StandardOutputEncoding = [System.Text.UTF8Encoding]::new($false)
+  $psi.StandardErrorEncoding = [System.Text.UTF8Encoding]::new($false)
+
+  $p = [System.Diagnostics.Process]::new()
+  $p.StartInfo = $psi
+
+  try {
+    if (-not $p.Start()) {
+      throw "Failed to start codex"
+    }
+
+    $stdout = $p.StandardOutput.ReadToEndAsync()
+    $stderr = $p.StandardError.ReadToEndAsync()
+    $p.WaitForExit()
+    [System.Threading.Tasks.Task]::WaitAll(@($stdout, $stderr))
+
+    if ($p.ExitCode -ne 0) {
+      $detail = (Repair-CodexTextEncoding (($stderr.Result ?? "") + "`n" + ($stdout.Result ?? ""))).Trim()
+
+      if (-not $detail) {
+        $detail = "codex $Disposition exited with code $($p.ExitCode)"
+      }
+
+      throw $detail
+    }
+  } finally {
+    $p.Dispose()
   }
 }
 
@@ -1331,42 +1883,21 @@ function Invoke-CodexTerminalExplainCommand {
   }
 }
 
-function Read-CodexTerminalCommandAction {
+function Read-CodexTerminalActionMenu {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory)]
-    [string] $DefaultAction
+    [string] $DefaultAction,
+  
+  [Parameter(Mandatory)]
+    [object[]] $Actions,
+
+    [string] $Title = "Choose action",
+
+    [string] $ExitAction = "exit"
   )
 
-  $actions = @(
-    [pscustomobject]@{
-      Name = "copy"
-      Label = "Copy"
-      Description = "Copy command to clipboard"
-    },
-    [pscustomobject]@{
-      Name = "explain"
-      Label = "Explain"
-      Description = "Explain the suggested command"
-    },
-    [pscustomobject]@{
-      Name = "refine"
-      Label = "Refine"
-      Description = "Add more instructions and regenerate"
-    },
-    [pscustomobject]@{
-      Name = "execute"
-      Label = "Execute"
-      Description = "Run command in this shell session"
-    },
-    [pscustomobject]@{
-      Name = "exit"
-      Label = "Exit"
-      Description = "Do nothing"
-    }
-  )
-
-  $selected = Get-CodexTerminalActionIndex -DefaultAction $DefaultAction -Actions $actions
+  $selected = Get-CodexTerminalActionIndex -DefaultAction $DefaultAction -Actions $Actions
 
   $reset = $PSStyle.Reset
   $titleColor = $PSStyle.Foreground.Magenta
@@ -1376,10 +1907,15 @@ function Read-CodexTerminalCommandAction {
   $selectedFg = $PSStyle.Foreground.Black
   $selectedBg = $PSStyle.Background.Cyan
 
-  # Blank line before menu, this line is part of the redraw block
-  $lineCount = 1 + 2 + $actions.Count + 1
-  $renderedOnce = $false
+  $maxLabelLength = 0
+  foreach ($action in $Actions) {
+    $maxLabelLength = [Math]::Max($maxLabelLength, $action.Label.Length)
+  }
+  $labelWidth = [Math]::Max(8, $maxLabelLength + 2)
 
+  # Blank line + title + hint + actions + trailing blank line
+  $lineCount = 1 + 2 + $Actions.Count + 1
+  $renderedOnce = $false
   $oldCursorVisible = $true
 
   try {
@@ -1387,19 +1923,24 @@ function Read-CodexTerminalCommandAction {
     [Console]::CursorVisible = $false
   } catch { }
 
-  function Strip-Ansi {
+  function Remove-CodexMenuAnsi {
     param([AllowEmptyString()][string] $Text)
 
     return ($Text -replace "`e\[[0-9;]*m", "")
   }
 
-  function Get-SafeMenuLine {
+  function Get-CodexSafeMenuLine {
     param([AllowEmptyString()][string] $Text)
 
     $width = [Math]::Max(20, [Console]::BufferWidth - 1)
-    $plain = Strip-Ansi $Text
+    $width = try {
+      [Math]::Max(20, [Console]::BufferWidth - 1)
+    } catch {
+      120
+    }
 
-    # Keep menu lines comfortably short, this avoids wrapping, which ruins redraw
+    $plain = Remove-CodexMenuAnsi $Text
+
     if ($plain.Length -ge $width) {
       $max = [Math]::Max(1, $width - 4)
 
@@ -1409,113 +1950,128 @@ function Read-CodexTerminalCommandAction {
     return $Text
   }
 
-  function Write-MenuBlock {
-    if ($script:renderedOnce) {
-      # Move cursor back to beginning of previous menu block, then clear it
-      [Console]::Write("`e[$script:lineCount`A")
+  function Write-CodexMenuBlock {
+    param(
+      [Parameter(Mandatory)][int] $SelectedIndex,
+      [Parameter(Mandatory)][bool] $Redraw
+    )
+
+    if ($Redraw) {
+      [Console]::Write("`e[$lineCount`A")
       [Console]::Write("`e[0J")
     }
 
-    $lines = New-Object System.Collections.Generic.List[string]
+    $lines = [System.Collections.Generic.List[string]]::new()
 
     $lines.Add("")
-    $lines.Add("$script:titleColor Choose action$script:reset")
-    $lines.Add("$script:hintColor Up/Down move - Enter select - Esc exit$script:reset")
+    $lines.Add("$titleColor $Title$reset")
+    $lines.Add("$hintColor Up/Down move - Enter select - Esc exit$reset")
 
-    for ($i = 0; $i -lt $script:actions.Count; $i++) {
-      $prefix = if ($i -eq $script:selected) { ">" } else { " " }
-      $label = $script:actions[$i].Label.PadRight(8)
-      $description = $script:actions[$i].Description
+    for ($i = 0; $i -lt $Actions.Count; $i++) {
+      $prefix = if ($i -eq $SelectedIndex) { ">" } else { " " }
+      $label = $Actions[$i].Label.PadRight($labelWidth)
+      $description = $Actions[$i].Description
 
-      if ($i -eq $script:selected) {
-        $lines.Add("$script:selectedBg$script:selectedFg $prefix $label $description $script:reset")
+      if ($i -eq $SelectedIndex) {
+        $lines.Add("$selectedBg$selectedFg $prefix $label $description $reset")
       } else {
-        $lines.Add("$script:normalColor $prefix $label$script:reset $script:descColor$description$script:reset")
+        $lines.Add("$normalColor $prefix $label$reset $descColor$description$reset")
       }
     }
 
     $lines.Add("")
 
     foreach ($line in $lines) {
-      [Console]::WriteLine((Get-SafeMenuLine $line))
+      [Console]::WriteLine((Get-CodexSafeMenuLine $line))
     }
-
-    $script:renderedOnce = $true
   }
 
-  function Clear-MenuBlock {
-    if ($script:renderedOnce) {
-      [Console]::Write("`e[$script:lineCount`A")
+  function Clear-CodexMenuBlock {
+    if ($renderedOnce) {
+      [Console]::Write("`e[$lineCount`A")
       [Console]::Write("`e[0J")
-      $script:renderedOnce = $false
     }
   }
 
   try {
-    # Use script scope only inside these nested functions
-    $script:actions = $actions
-    $script:selected = $selected
-    $script:lineCount = $lineCount
-    $script:renderedOnce = $renderedOnce
-    $script:reset = $reset
-    $script:titleColor = $titleColor
-    $script:hintColor = $hintColor
-    $script:normalColor = $normalColor
-    $script:descColor = $descColor
-    $script:selectedFg = $selectedFg
-    $script:selectedBg = $selectedBg
-
-    Write-MenuBlock
+    Write-CodexMenuBlock -SelectedIndex $selected -Redraw $false
+    $renderedOnce = $true
 
     while ($true) {
       $key = [Console]::ReadKey($true)
 
       switch ($key.Key) {
         "UpArrow" {
-          $script:selected--
+          $selected--
 
-          if ($script:selected -lt 0) {
-            $script:selected = $script:actions.Count - 1
+          if ($selected -lt 0) {
+            $selected = $Actions.Count - 1
           }
 
-          Write-MenuBlock
+          Write-CodexMenuBlock -SelectedIndex $selected -Redraw $true
         } "DownArrow" {
-          $script:selected++
+          $selected++
 
-          if ($script:selected -ge $script:actions.Count) {
-            $script:selected = 0
+          if ($selected -ge $Actions.Count) {
+            $selected = 0
           }
 
-          Write-MenuBlock
+          Write-CodexMenuBlock -SelectedIndex $selected -Redraw $true
         } "Enter" {
-          $chosen = $script:actions[$script:selected].Name
-          Clear-MenuBlock
+          $chosen = $Actions[$selected].Name
+          Clear-CodexMenuBlock
+          $renderedOnce = $false
+
           return $chosen
         } "Escape" {
-          Clear-MenuBlock
+          Clear-CodexMenuBlock
+          $renderedOnce = $false
+
           return "exit"
         }
       }
     }
   } finally {
-    Clear-MenuBlock
-
-    Remove-Variable -Name actions -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name selected -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name lineCount -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name renderedOnce -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name reset -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name titleColor -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name hintColor -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name normalColor -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name descColor -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name selectedFg -Scope Script -ErrorAction SilentlyContinue
-    Remove-Variable -Name selectedBg -Scope Script -ErrorAction SilentlyContinue
+    Clear-CodexMenuBlock
 
     try {
       [Console]::CursorVisible = $oldCursorVisible
     } catch { }
   }
+}
+
+function Read-CodexTerminalCommandAction {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $DefaultAction
+  )
+
+  $actions = @(
+    [pscustomobject]@{ Name = "copy"; Label = "Copy"; Description = "Copy command to clipboard" },
+    [pscustomobject]@{ Name = "explain"; Label = "Explain"; Description = "Explain the suggested command" },
+    [pscustomobject]@{ Name = "refine"; Label = "Refine"; Description = "Add more instructions and regenerate" },
+    [pscustomobject]@{ Name = "execute"; Label = "Execute"; Description = "Run command in this shell session" },
+    [pscustomobject]@{ Name = "exit"; Label = "Exit"; Description = "Do nothing" }
+  )
+
+  return Read-CodexTerminalActionMenu -DefaultAction $DefaultAction -Actions $actions
+}
+
+function Read-CodexTerminalAskAction {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $DefaultAction
+  )
+
+  $actions = @(
+    [pscustomobject]@{ Name = "reply"; Label = "Reply"; Description = "Continue this conversation" },
+    [pscustomobject]@{ Name = "copy"; Label = "Copy & exit"; Description = "Copy the entire conversation and exit" },
+    [pscustomobject]@{ Name = "exit"; Label = "Exit"; Description = "Exit without copying" }
+  )
+
+  return Read-CodexTerminalActionMenu -DefaultAction $DefaultAction -Actions $actions
 }
 
 function Add-CodexTerminalCommandToHistory {
@@ -1570,6 +2126,237 @@ function Invoke-CodexTerminalGeneratedCommand {
   }
 }
 
+function Write-CodexTerminalAskExchange {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $UserText,
+
+    [Parameter(Mandatory)]
+    [string] $AssistantText,
+
+    [switch] $ShowUser
+  )
+
+  if ($ShowUser) {
+    Write-Host "You" -ForegroundColor Magenta
+    Write-Host $UserText
+    Write-Host ""
+  }
+
+  Write-Host "Codex" -ForegroundColor Cyan
+  Write-SimpleMarkdown -Text $AssistantText
+  Write-Host ""
+}
+
+function ConvertTo-CodexTerminalAskTranscript {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [object[]] $Transcript,
+
+    [Parameter(Mandatory)]
+    [string] $Model,
+
+    [Parameter(Mandatory)]
+    [string] $Effort,
+
+    [Parameter(Mandatory)]
+    [string] $Tier,
+
+    [Parameter(Mandatory)]
+    [DateTimeOffset] $StartedAt,
+
+    [Parameter(Mandatory)]
+    [pscustomobject] $Stats,
+
+    [Parameter(Mandatory)]
+    [bool] $IncludeStats
+  )
+
+  $lines = [System.Collections.Generic.List[string]]::new()
+  $lines.Add("- Model : ``$Model``")
+  $lines.Add("- Reasoning effort : ``$Effort``")
+  $lines.Add("- Service tier : ``$Tier``")
+  $lines.Add("- Date : $($StartedAt.ToString('yyyy-MM-dd HH:mm:ss zzz'))")
+
+  if ($IncludeStats) {
+    $cachePct = if ($Stats.TotalInputTokens -gt 0) {
+      100.0 * $Stats.TotalCachedInputTokens / $Stats.TotalInputTokens
+    } else {
+      0.0
+    }
+
+    if ($Stats.ThreadId) {
+      $lines.Add("- Thread : ``$($Stats.ThreadId)``")
+    }
+
+    $lines.Add("- Turns : $($Stats.Turns)")
+    $lines.Add("- Total time : $(Format-CodexTerminalDuration $Stats.TotalDuration)")
+    $lines.Add("- Input tokens : $($Stats.TotalInputTokens)")
+    $lines.Add("- Cached input tokens : $($Stats.TotalCachedInputTokens) ($('{0:n1}' -f $cachePct)%)")
+    $lines.Add("- Output tokens : $($Stats.TotalOutputTokens)")
+
+    if ($Stats.TotalReasoningOutputTokens -gt 0) {
+      $lines.Add("- Reasoning output tokens : $($Stats.TotalReasoningOutputTokens)")
+    }
+  }
+
+  $lines.Add("")
+  $lines.Add("---")
+
+  foreach ($entry in $Transcript) {
+    $label = if ($entry.Role -eq "user") { "You" } else { "Codex" }
+    $lines.Add("")
+    $lines.Add("## $label")
+    $lines.Add("")
+    $lines.Add(([string] $entry.Text).TrimEnd("`r", "`n"))
+  }
+
+  return (($lines -join "`n").TrimEnd() + "`n")
+}
+
+function cta {
+  [CmdletBinding()]
+  param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]] $Prompt
+  )
+
+  $text = Get-InvocationRemainder -Line $MyInvocation.Line -InvocationName $MyInvocation.InvocationName @Prompt
+
+  if ($text -match '^\s*--%\s*(.*)$') {
+    $text = $Matches[1]
+  }
+
+  if (-not $text) {
+    throw "❌ No query provided, use cta --% <what you want to ask> (ex : cta why does TCP need a three-way handshake ?)"
+  }
+
+  $threadId = $null
+  $threadDisposition = $null
+
+  try {
+    $model = Get-CodexTerminalModel
+    $effort = Get-CodexTerminalEffort
+    $tier = Get-CodexTerminalTier
+    $defaultAction = Get-CodexTerminalAskDefaultAction
+    $threadDisposition = Get-CodexTerminalAskThreadDisposition
+    $verbose = Get-CodexTerminalVerbose
+    $startedAt = [DateTimeOffset]::Now
+    $stats = New-CodexTerminalStatsBag
+    $stats.LastModel = $model
+    $stats.LastEffort = $effort
+    $stats.LastTier = $tier
+    $transcript = [System.Collections.Generic.List[object]]::new()
+
+    # Keep this intentionally tiny, Codex's own base/system instructions remain intact, this is only a developer-role nudge so cta behaves like general-purpose chat
+    $developerInstructions = "Treat this as a general-purpose chat. Answer directly and naturally. Use Markdown when useful. Do not assume the request is about terminals, coding, or the current directory unless the user asks."
+
+    $turn = Invoke-CodexJsonTurnWithSpinner `
+      -Prompt $text `
+      -Model $model `
+      -Effort $effort `
+      -Tier $tier `
+      -DeveloperInstructions $developerInstructions `
+      -SpinnerMessage "Codex is answering"
+
+    $threadId = $turn.ThreadId
+    $stats.ThreadId = $threadId
+    Add-CodexTerminalJsonTurnStats -Stats $stats -Turn $turn
+    $transcript.Add([pscustomobject]@{ Role = "user"; Text = $text })
+    $transcript.Add([pscustomobject]@{ Role = "assistant"; Text = $turn.Answer })
+
+    # The initial user prompt is already visible in the shell invocation, avoid echoing it twice
+    Write-CodexTerminalAskExchange -UserText $text -AssistantText $turn.Answer
+
+    while ($true) {
+      $action = Read-CodexTerminalAskAction -DefaultAction $defaultAction
+
+      switch ($action) {
+        "reply" {
+          $reply = Read-Host "💬 Reply"
+
+          if ([string]::IsNullOrWhiteSpace($reply)) {
+            Write-Host "No reply entered, returning to menu" -ForegroundColor Yellow
+            continue
+          }
+
+          Write-Host ""
+
+          try {
+            $turn = Invoke-CodexJsonTurnWithSpinner `
+              -Prompt $reply `
+              -ThreadId $threadId `
+              -Model $model `
+              -Effort $effort `
+              -Tier $tier `
+              -DeveloperInstructions $developerInstructions `
+              -SpinnerMessage "Codex is replying"
+
+            Add-CodexTerminalJsonTurnStats -Stats $stats -Turn $turn
+            $transcript.Add([pscustomobject]@{ Role = "user"; Text = $reply })
+            $transcript.Add([pscustomobject]@{ Role = "assistant"; Text = $turn.Answer })
+            Write-CodexTerminalAskExchange -UserText $reply -AssistantText $turn.Answer
+          } catch {
+            Write-Host "❌ Reply failed : $($_.Exception.Message)" -ForegroundColor Red
+            Write-Host "The existing thread is still selected, you can retry or exit" -ForegroundColor DarkGray
+          }
+
+          continue
+        }
+        "copy" {
+          $copyText = ConvertTo-CodexTerminalAskTranscript `
+            -Transcript $transcript.ToArray() `
+            -Model $model `
+            -Effort $effort `
+            -Tier $tier `
+            -StartedAt $startedAt `
+            -Stats $stats `
+            -IncludeStats $verbose
+
+          Set-Clipboard -Value $copyText
+
+          if ($verbose) {
+            Write-CodexTerminalAskVerboseHeader -Stats $stats -Model $model -Effort $effort -Tier $tier -ThreadDisposition $threadDisposition
+          } else {
+            Write-Host ""
+          }
+
+          Write-Host "✅ Conversation copied to the clipboard" -ForegroundColor Green
+          return
+        }
+        "exit" {
+          if ($verbose) {
+            Write-CodexTerminalAskVerboseHeader -Stats $stats -Model $model -Effort $effort -Tier $tier -ThreadDisposition $threadDisposition
+          } else {
+            Write-Host ""
+          }
+
+          Write-Host "↩ Exited without copying" -ForegroundColor DarkGray
+          return
+        }
+      }
+    }
+  } catch {
+    Write-Host "❌ cta failed : $($_.Exception.Message)" -ForegroundColor Red
+  } finally {
+    if ($threadId -and $threadDisposition -and $threadDisposition -ne "keep") {
+      try {
+        Invoke-CodexTerminalThreadDisposition -ThreadId $threadId -Disposition $threadDisposition
+
+        if ($threadDisposition -eq "archive") {
+          Write-Host "📦 Codex thread archived : $threadId" -ForegroundColor DarkGray
+        } elseif ($threadDisposition -eq "delete") {
+          Write-Host "🗑️ Codex thread deleted : $threadId" -ForegroundColor DarkGray
+        }
+      } catch {
+        Write-Host "⚠️ Failed to $threadDisposition Codex thread $threadId : $($_.Exception.Message)" -ForegroundColor Yellow
+      }
+    }
+  }
+}
+
 function cts {
   [CmdletBinding()]
   param(
@@ -1602,7 +2389,7 @@ function cts {
         $currentCommand = $generation.Command
         Add-CodexTerminalTurnStats -Stats $stats -Parsed $generation.Parsed
   
-        Write-SimpleMarkdown -Text $currentCommand
+        Write-Host $currentCommand
   
         $needsGeneration = $false
       }
@@ -1634,10 +2421,11 @@ function cts {
           continue
         } "refine" {
           Write-Host ""
-          $newRefinement = Read-Host "🧪 Refine "
+          $newRefinement = Read-Host "🧪 Refine"
 
           if ([string]::IsNullOrWhiteSpace($newRefinement)) {
             Write-Host "No refinement entered, returning to menu" -ForegroundColor Yellow
+
             continue
           }
 
@@ -1721,8 +2509,8 @@ function Search-Term {
     [switch] $NoWordBoundary,
     [switch] $NoHighlight,
 
-    # Enabled by default, use -Delta:$false to use the built-in formatter
-    [bool] $Delta = $true,
+    # Uses Delta as a formatter
+    [switch] $Delta,
 
     # Folder paths to search, can be absolute or relative. Relative paths are resolved from the current directory at runtime.
     [Alias("Paths", "Folder", "Folders")]
@@ -1840,7 +2628,7 @@ function Search-Term {
     Write-Host ""
     Write-Host "${bold}${cyan}Search-Term${reset}"
     Write-Host ""
-    Write-Host "Searches folders with ripgrep, uses delta by default syntax highlighting and sorting"
+    Write-Host "Searches folders with ripgrep with file and line sorting"
     Write-Host ""
     Write-Host "${bold}Usage${reset}"
     Write-Host "  Search-Term query"
@@ -1889,8 +2677,7 @@ function Search-Term {
     Write-Host "  -CaseSensitive   Match case exactly, by default search is case-insensitive"
     Write-Host "  -NoWordBoundary  Disable rg -w, useful for partial identifiers"
     Write-Host "  -NoHighlight     Disable yellow highlighting in built-in formatter"
-    Write-Host "  -Delta           Use delta for syntax highlighting/sorting, enabled by default"
-    Write-Host "                   Disable with : Search-Term query -Delta:`$false"
+    Write-Host "  -Delta           Use delta for syntax highlighting"
     Write-Host "  -SplitQuoted     Split quoted query strings by whitespace in All/Any modes"
     Write-Host "  -Encoding        File encoding strategy, default is auto"
     Write-Host "                   auto = rg utf-8 pass, then windows-1252 fallback for missed lines"
@@ -1949,7 +2736,7 @@ function Search-Term {
   }
 
   if ($Delta -and -not (Get-Command delta -ErrorAction SilentlyContinue)) {
-    throw "delta was not found in PATH, install delta or run with -Delta:`$false"
+    throw "delta was not found in PATH, install delta"
   }
 
   # Build search terms
@@ -2579,7 +3366,7 @@ function Search-Term {
       Write-Host "  ${bold}${green}${currentFile}${reset}"
     }
 
-    $location = "{0}:{1}" -f $result.Line, $result.Column
+    $location = ":{0}:{1}" -f $result.Line, $result.Column
     $text = Format-MatchText $result.Text
 
     Write-Host "    ${gray}${location}${reset}  $text"
@@ -2771,337 +3558,242 @@ PARAMETERS
 }
 
 function Convert-CrlfToLfPreserveEncoding {
-  [CmdletBinding(SupportsShouldProcess)]
-  param(
-    [string] $Path = ".",
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param(
+        [string] $Path = (Get-Location).ProviderPath,
 
-    [switch] $Help,
+        # Optional safety limit, 0 means no limit
+        [int] $MaxMB = 0
+    )
 
-    [string[]] $Extensions = @(
-      ".py",
-      ".txt",
-      ".ini",
-      ".cfg",
-      ".json",
-      ".md",
-      ".yml",
-      ".yaml",
-      ".html",
-      ".css",
-      ".js",
-      ".ts",
-      ".xml",
-      ".csv"
-    ),
+    Set-StrictMode -Version Latest
 
-    [string[]] $ExcludeDirectoryNames = @(
-      ".git",
-      ".venv",
-      "venv",
-      "node_modules",
-      "__pycache__"
-    ),
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "git was not found in PATH, this function uses git to respect .gitignore"
+    }
 
-    [switch] $IncludeDotDirectories
-  )
+    $insideGit = (& git -C $Path rev-parse --is-inside-work-tree 2>$null)
 
-  if ($Help) {
-    @"
-Convert-CrlfToLfPreserveEncoding
+    if ($LASTEXITCODE -ne 0 -or "$insideGit".Trim() -ne "true") {
+        throw "Path is not inside a Git working tree : $Path"
+    }
 
-Converts CRLF line endings to LF while preserving detected file encoding
-
-Encoding detection policy :
-  - UTF-8 with BOM     => preserved as UTF-8 with BOM
-  - Valid UTF-8        => written back as UTF-8 without BOM
-  - Ambiguous UTF-8/Windows-1252 => treated as UTF-8
-  - Otherwise Windows-1252 if valid
-  - Otherwise skipped
-
-Usage :
-  Convert-CrlfToLfPreserveEncoding
-  Convert-CrlfToLfPreserveEncoding -Path .
-  Convert-CrlfToLfPreserveEncoding -Path . -Extensions .py,.txt,.ini
-  Convert-CrlfToLfPreserveEncoding -Path . -Extensions "*"
-  Convert-CrlfToLfPreserveEncoding -Path . -Extensions "*" -WhatIf
-  Convert-CrlfToLfPreserveEncoding -Help
-
-Parameters :
-  -Path
-      Root directory to process, defaults to current directory
-
-  -Extensions
-      File extensions to process
-      Use "*" to process all likely-text files dynamically
-      Binary-looking files are skipped when using "*"
-
-  -ExcludeDirectoryNames
-      Directory names to skip during recursion
-
-  -IncludeDotDirectories
-      By default, directories whose name starts with "." are skipped
-      Use this switch to include them
-
-  -WhatIf
-      Preview changes without writing files (dry-run)
-"@
-    return
-  }
-
-  # Needed in PowerShell 7/.NET for legacy code pages like windows-1252, RegisterProvider makes those encodings available through Encoding.GetEncoding()
-  try {
-    Add-Type -AssemblyName System.Text.Encoding.CodePages -ErrorAction SilentlyContinue
+    # Needed for Windows-1252 in PowerShell 7 / .NET
+    Add-Type -AssemblyName System.Text.Encoding.CodePages
     [System.Text.Encoding]::RegisterProvider(
-      [System.Text.CodePagesEncodingProvider]::Instance
-    )
-  } catch {
-    # Already registered/unavailable, ignore here
-  }
-
-  function Test-BytePrefix {
-    param(
-      [Parameter(Mandatory)]
-      [byte[]] $Bytes,
-
-      [Parameter(Mandatory)]
-      [byte[]] $Prefix
+        [System.Text.CodePagesEncodingProvider]::Instance
     )
 
-    if ($Bytes.Length -lt $Prefix.Length) {
-      return $false
-    }
-
-    for ($i = 0; $i -lt $Prefix.Length; $i++) {
-      if ($Bytes[$i] -ne $Prefix[$i]) {
-        return $false
-      }
-    }
-
-    return $true
-  }
-
-  function New-StrictEncoding {
-    param(
-      [Parameter(Mandatory)]
-      [string] $Name,
-
-      [switch] $Utf8Bom
+    $Utf8StrictNoBom = [System.Text.UTF8Encoding]::new($false, $true)
+    $Win1252Strict = [System.Text.Encoding]::GetEncoding(
+        1252,
+        [System.Text.EncoderFallback]::ExceptionFallback,
+        [System.Text.DecoderFallback]::ExceptionFallback
     )
 
-    $base = [System.Text.Encoding]::GetEncoding($Name)
+    function Test-IsProbablyBinary {
+        param([byte[]] $Bytes)
 
-    # For UTF-8, control BOM explicitly and throw on invalid byte sequences
-    if ($base.CodePage -eq 65001) {
-      return [System.Text.UTF8Encoding]::new([bool] $Utf8Bom, $true)
-    }
-
-    # For legacy encodings, throw if decoding/encoding fails
-    return [System.Text.Encoding]::GetEncoding(
-      $base.CodePage,
-      [System.Text.EncoderFallback]::ExceptionFallback,
-      [System.Text.DecoderFallback]::ExceptionFallback
-    )
-  }
-
-  function Test-LikelyTextBytes {
-    param(
-      [Parameter(Mandatory)]
-      [byte[]] $Bytes,
-
-      [int] $ProbeLength = 8192,
-
-      [double] $MaxControlRatio = 0.05
-    )
-
-    if ($Bytes.Length -eq 0) {
-      return $true
-    }
-
-    $length = [Math]::Min($Bytes.Length, $ProbeLength)
-    $controlCount = 0
-
-    for ($i = 0; $i -lt $length; $i++) {
-      $b = $Bytes[$i]
-
-      # NUL bytes are a very strong binary signal for our use case
-      if ($b -eq 0x00) {
-        return $false
-      }
-
-      # Allow common text control chars :
-      # TAB, LF, CR, FF, BS
-      if (
-        $b -eq 0x09 -or
-        $b -eq 0x0A -or
-        $b -eq 0x0D -or
-        $b -eq 0x0C -or
-        $b -eq 0x08
-      ) {
-        continue
-      }
-
-      # Other C0 controls + DEL are suspicious in text files
-      if ($b -lt 0x20 -or $b -eq 0x7F) {
-        $controlCount++
-      }
-    }
-
-    return (($controlCount / $length) -le $MaxControlRatio)
-  }
-
-  function Get-Utf8OrWindows1252Encoding {
-    param(
-      [Parameter(Mandatory)]
-      [byte[]] $Bytes
-    )
-
-    $utf8BomBytes = [byte[]] (0xEF, 0xBB, 0xBF)
-
-    if (Test-BytePrefix -Bytes $Bytes -Prefix $utf8BomBytes) {
-      return [pscustomobject]@{
-        Name      = "utf-8-bom"
-        Encoding  = New-StrictEncoding -Name "utf-8" -Utf8Bom
-        BomLength = 3
-        Ambiguous = $false
-      }
-    }
-
-    $utf8 = New-StrictEncoding -Name "utf-8"
-    $win1252 = New-StrictEncoding -Name "windows-1252"
-
-    $utf8Ok = $false
-    $win1252Ok = $false
-
-    try {
-      $null = $utf8.GetString($Bytes)
-      $utf8Ok = $true
-    } catch { }
-
-    try {
-      $null = $win1252.GetString($Bytes)
-      $win1252Ok = $true
-    } catch { }
-
-    # Requested policy : ambiguous => utf-8
-    if ($utf8Ok) {
-      return [pscustomobject]@{
-        Name      = if ($win1252Ok) { "utf-8-ambiguous" } else { "utf-8" }
-        Encoding  = $utf8
-        BomLength = 0
-        Ambiguous = $win1252Ok
-      }
-    }
-
-    if ($win1252Ok) {
-      return [pscustomobject]@{
-        Name      = "windows-1252"
-        Encoding  = $win1252
-        BomLength = 0
-        Ambiguous = $false
-      }
-    }
-
-    return $null
-  }
-
-  $root = (Resolve-Path -LiteralPath $Path).Path
-
-  $allTextLikeFiles = $Extensions.Count -eq 1 -and $Extensions[0] -eq "*"
-
-  $normalizedExtensions = if ($allTextLikeFiles) {
-    @("*")
-  } else {
-    $Extensions | ForEach-Object {
-      if ($_.StartsWith(".")) { $_ } else { ".$_" }
-    }
-  }
-
-  Get-ChildItem -LiteralPath $root -Recurse -File | ForEach-Object {
-    $file = $_
-
-    $relative = [System.IO.Path]::GetRelativePath($root, $file.FullName)
-    $parent = Split-Path -Path $relative -Parent
-
-    if ($parent) {
-      $dirNames = $parent -split '[\\/]'
-
-      foreach ($dirName in $dirNames) {
-        if ($dirName -in $ExcludeDirectoryNames) {
-          return
+        if ($Bytes.Length -eq 0) {
+            return $false
         }
 
-        if (-not $IncludeDotDirectories -and $dirName.StartsWith(".")) {
-          return
-        }
-      }
-    }
-
-    if (
-      -not $allTextLikeFiles -and
-      $normalizedExtensions.Count -gt 0 -and
-      $file.Extension -notin $normalizedExtensions
-    ) {
-      return
-    }
-
-    try {
-      $bytes = [System.IO.File]::ReadAllBytes($file.FullName)
-
-      if ($allTextLikeFiles -and -not (Test-LikelyTextBytes -Bytes $bytes)) {
-        [pscustomobject]@{
-          Path   = $file.FullName
-          Status = "skipped : likely binary"
+        # Hard binary signal
+        if ($Bytes -contains 0) {
+            return $true
         }
 
-        return
-      }
-
-      $detected = Get-Utf8OrWindows1252Encoding -Bytes $bytes
-
-      if ($null -eq $detected) {
-        [pscustomobject]@{
-          Path     = $file.FullName
-          Encoding = "unknown"
-          Status   = "skipped : neither utf-8 nor windows-1252"
-        }
-
-        return
-      }
-
-      $text = $detected.Encoding.GetString(
-        $bytes,
-        $detected.BomLength,
-        $bytes.Length - $detected.BomLength
-      )
-
-      if (-not $text.Contains("`r`n")) {
-        return
-      }
-
-      $newText = $text.Replace("`r`n", "`n")
-
-      if ($PSCmdlet.ShouldProcess($file.FullName, "CRLF -> LF preserving $($detected.Name)")) {
-        [System.IO.File]::WriteAllText(
-          $file.FullName,
-          $newText,
-          $detected.Encoding
+        # Common magic bytes for files we definitely do not want to rewrite
+        $hex = -join ($Bytes[0..([Math]::Min($Bytes.Length - 1, 15))] | ForEach-Object { $_.ToString("X2") })
+        $magicPrefixes = @(
+            "89504E47",         # PNG
+            "FFD8FF",           # JPEG
+            "474946383761",     # GIF87a
+            "474946383961",     # GIF89a
+            "25504446",         # PDF
+            "504B0304",         # ZIP/docx/jar/...
+            "504B0506",
+            "504B0708",
+            "526172211A0700",   # RAR
+            "377ABCAF271C",     # 7z
+            "1F8B08",           # gzip
+            "425A68",           # bzip2
+            "FD377A585A00",     # xz
+            "7F454C46",         # ELF
+            "4D5A",             # Windows exe/dll
+            "00000100",         # ICO
+            "494433",           # MP3 ID3
+            "4F676753",         # OGG
+            "52494646",         # RIFF : wav/webp/avi
+            "0000001866747970", # mp4-ish
+            "0000002066747970",
+            "53514C69746520666F726D6174203300" # SQLite
         )
 
-        [pscustomobject]@{
-          Path      = $file.FullName
-          Encoding  = $detected.Name
-          Ambiguous = $detected.Ambiguous
-          Status    = "converted"
+        foreach ($prefix in $magicPrefixes) {
+            if ($hex.StartsWith($prefix)) {
+                return $true
+            }
         }
-      }
-    } catch {
-      [pscustomobject]@{
-        Path   = $file.FullName
-        Status = "error"
-        Error  = $_.Exception.Message
-      }
+
+        # Heuristic : lots of non-whitespace control chars usually means binary
+        $sampleSize = [Math]::Min($Bytes.Length, 8192)
+        $badControls = 0
+
+        for ($i = 0; $i -lt $sampleSize; $i++) {
+            $b = $Bytes[$i]
+
+            $isAllowedWhitespace =
+                $b -eq 9  -or # tab
+                $b -eq 10 -or # LF
+                $b -eq 13     # CR
+
+            if ($b -lt 32 -and -not $isAllowedWhitespace) {
+                $badControls++
+            }
+        }
+
+        return (($badControls / [double] $sampleSize) -gt 0.02)
     }
-  }
+
+    function ConvertFrom-KnownTextEncoding {
+        param([byte[]] $Bytes)
+
+        # UTF-8 BOM
+        if (
+            $Bytes.Length -ge 3 -and
+            $Bytes[0] -eq 0xEF -and
+            $Bytes[1] -eq 0xBB -and
+            $Bytes[2] -eq 0xBF
+        ) {
+            $bodyBytes = if ($Bytes.Length -gt 3) {
+                $Bytes[3..($Bytes.Length - 1)]
+            } else {
+                [byte[]]::new(0)
+            }
+
+            try {
+                return [pscustomobject]@{
+                    Text     = $Utf8StrictNoBom.GetString($bodyBytes)
+                    Encoding = "utf8-bom"
+                }
+            } catch {
+                return $null
+            }
+        }
+
+        # Strict UTF-8 without BOM
+        try {
+            return [pscustomobject]@{
+                Text     = $Utf8StrictNoBom.GetString($Bytes)
+                Encoding = "utf8"
+            }
+        } catch {
+            # Fall through to Windows-1252
+        }
+
+        # Strict Windows-1252
+        try {
+            return [pscustomobject]@{
+                Text     = $Win1252Strict.GetString($Bytes)
+                Encoding = "windows-1252"
+            }
+        } catch {
+            return $null
+        }
+    }
+
+    function ConvertTo-OriginalEncodingBytes {
+        param(
+            [string] $Text,
+            [string] $EncodingName
+        )
+
+        switch ($EncodingName) {
+            "utf8" {
+                return $Utf8StrictNoBom.GetBytes($Text)
+            } "utf8-bom" {
+                $body = $Utf8StrictNoBom.GetBytes($Text)
+                return [byte[]] @(0xEF, 0xBB, 0xBF) + $body
+            } "windows-1252" {
+                return $Win1252Strict.GetBytes($Text)
+            } default {
+                throw "Unsupported encoding : $EncodingName"
+            }
+        }
+    }
+
+    # Tracked + untracked files, but not ignored files
+    # This respects .gitignore, .git/info/exclude, and global git excludes
+    $rawList = (& git -C $Path ls-files -c -o --exclude-standard -z -- .) -join ""
+    $relativeFiles = $rawList -split "`0" | Where-Object { $_ }
+    $stats = [ordered]@{
+        Scanned       = 0
+        Converted     = 0
+        AlreadyLf     = 0
+        SkippedBinary = 0
+        SkippedDecode = 0
+        SkippedLarge  = 0
+        Errors        = 0
+    }
+
+    foreach ($relativeFile in $relativeFiles) {
+        $fullPath = Join-Path $Path $relativeFile
+
+        if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
+            continue
+        }
+
+        $stats.Scanned++
+
+        try {
+            $item = Get-Item -LiteralPath $fullPath -Force
+
+            if ($MaxMB -gt 0 -and $item.Length -gt ($MaxMB * 1MB)) {
+                $stats.SkippedLarge++
+
+                continue
+            }
+
+            $bytes = [System.IO.File]::ReadAllBytes($item.FullName)
+
+            if (Test-IsProbablyBinary $bytes) {
+                $stats.SkippedBinary++
+
+                continue
+            }
+
+            $decoded = ConvertFrom-KnownTextEncoding $bytes
+            if ($null -eq $decoded) {
+                $stats.SkippedDecode++
+
+                continue
+            }
+
+            if (-not $decoded.Text.Contains("`r`n")) {
+                $stats.AlreadyLf++
+
+                continue
+            }
+
+            $newText = $decoded.Text.Replace("`r`n", "`n")
+            $newBytes = ConvertTo-OriginalEncodingBytes `
+                -Text $newText `
+                -EncodingName $decoded.Encoding
+
+            if ($PSCmdlet.ShouldProcess($item.FullName, "Convert CRLF to LF as $($decoded.Encoding)")) {
+                [System.IO.File]::WriteAllBytes($item.FullName, $newBytes)
+                Write-Host "converted [$($decoded.Encoding)] $relativeFile"
+            }
+
+            $stats.Converted++
+        } catch {
+            $stats.Errors++
+            Write-Warning "Failed : $relativeFile — $($_.Exception.Message)"
+        }
+    }
+
+    [pscustomobject] $stats
 }
 
 # fnm
@@ -3116,6 +3808,9 @@ pnpm completion pwsh | Out-String | Invoke-Expression
 
 # Codex
 codex completion powershell | Out-String | Invoke-Expression
+
+# Zed
+zed --completions powershell | Out-String | Invoke-Expression
 
 # ripgrep
 rg --generate complete-powershell | Out-String | Invoke-Expression
@@ -3327,28 +4022,16 @@ function pst {
 Import-Module -Name Microsoft.WinGet.CommandNotFound
 #f45873b3-b655-43a6-b217-97c00aa0db58
 
+# VS Code Shell integration, have to stay last per https://github.com/microsoft/vscode/issues/321273
+if ($env:TERM_PROGRAM -eq "vscode") {
+    . "$(code --locate-shell-integration-path pwsh)"
+}
+
 # DO NOT MODIFY -- coreutils -- 60b36fc6-2d59-49df-be51-28dd2f4c3c9a
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # Inlining the template into the profile shaves off ~10ms (25%).
 $script:__COREUTILS__ = [System.Collections.Generic.HashSet[string]]::new(
-    [string[]]@(
-        'arch', 'b2sum', 'base32', 'base64', 'basename',
-        'basenc', 'cat', 'cksum', 'comm', 'cp',
-        'csplit', 'cut', 'date', 'df', 'dirname',
-        'du', 'echo', 'env', 'expr', 'factor',
-        'false', 'find', 'fmt', 'fold', 'grep',
-        'head', 'hostname', 'join', 'la', 'link',
-        'ln', 'ls', 'md5sum', 'mkdir', 'mktemp',
-        'mv', 'nl', 'nproc', 'numfmt', 'od',
-        'pathchk', 'pr', 'printenv', 'printf', 'ptx',
-        'pwd', 'readlink', 'realpath', 'rm', 'rmdir',
-        'seq', 'sha1sum', 'sha224sum', 'sha256sum', 'sha384sum',
-        'sha512sum', 'shuf', 'sleep', 'sort', 'split',
-        'stat', 'sum', 'tac', 'tail', 'tee',
-        'test', 'touch', 'tr', 'true', 'truncate',
-        'tsort', 'unexpand', 'uniq', 'unlink', 'uptime',
-        'wc', 'xargs', 'yes'
-    ),
+    [string[]]@('arch','b2sum','base32','base64','basename','basenc','cat','cksum','comm','cp','csplit','cut','date','df','dirname','du','echo','env','expr','factor','false','find','fmt','fold','grep','head','hostname','join','la','link','ln','ls','md5sum','mkdir','mktemp','mv','nl','nproc','numfmt','od','paste','pathchk','pr','printenv','printf','ptx','pwd','readlink','realpath','rm','rmdir','seq','sha1sum','sha224sum','sha256sum','sha384sum','sha512sum','shuf','sleep','sort','split','stat','sum','tac','tail','tee','test','touch','tr','true','truncate','tsort','unexpand','uniq','unlink','uptime','wc','xargs','yes'),
     [System.StringComparer]::OrdinalIgnoreCase
 )
 
@@ -3415,6 +4098,9 @@ $script:__COREUTILS_ARG_EVAL__ = [System.Text.RegularExpressions.MatchEvaluator]
     return $ExecutionContext.InvokeCommand.ExpandString($m.Groups[4].Value)
 }
 
+# 0: not tested, 1: coreutils not installed, 2: coreutils installed.
+$script:__COREUTILS_CMD_DIR_TEST__ = 0
+
 # PSConsoleHostReadLine override that rewrites coreutils command names to their
 # .cmd equivalents after PSReadLine returns (history keeps the original).
 #
@@ -3434,6 +4120,18 @@ function PSConsoleHostReadLine {
 
     # If the line contains no coreutils name, we don't need to parse the AST at all.
     if (-not $script:__COREUTILS_FAST_SKIP__.IsMatch($line)) {
+        return $line
+    }
+
+    # Roamed/synced profiles can load this snippet on machines where coreutils is not installed.
+    # Test for the existence of the command directory once and remember the result.
+    if ($script:__COREUTILS_CMD_DIR_TEST__ -eq 0) {
+        $script:__COREUTILS_CMD_DIR_TEST__ = 1
+        if (Test-Path -LiteralPath 'C:\Program Files\coreutils\cmd\' -PathType Container -ErrorAction Ignore) {
+            $script:__COREUTILS_CMD_DIR_TEST__ = 2
+        }
+    }
+    if ($script:__COREUTILS_CMD_DIR_TEST__ -ne 2) {
         return $line
     }
 
@@ -3530,8 +4228,3 @@ function PSConsoleHostReadLine {
 }
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # DO NOT MODIFY -- coreutils -- 60b36fc6-2d59-49df-be51-28dd2f4c3c9a
-
-# VS Code Shell integration, have to be last per https://github.com/microsoft/vscode/issues/321273
-if ($env:TERM_PROGRAM -eq "vscode") {
-  . "$(code --locate-shell-integration-path pwsh)"
-}

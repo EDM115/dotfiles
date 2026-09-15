@@ -3,25 +3,50 @@
     "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11",
     "private": true,
     "dependencies": {
+      "@openai/codex-security": {
+        "from": "@openai/codex-security",
+        "version": "0.1.27",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f2f4985d51c-4\\node_modules\\@openai\\codex-security"
+      },
       "@pnpm/exe": {
         "from": "@pnpm/exe",
-        "version": "11.7.0",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385c89\\node_modules\\@pnpm\\exe"
+        "version": "11.25.0",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\13a8-1a063227ada-5f7db5c46a84c5ff\\node_modules\\@pnpm\\exe"
+      },
+      "cline": {
+        "from": "cline",
+        "version": "3.0.61",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f3092eca270-6\\node_modules\\cline"
       },
       "node-gyp": {
         "from": "node-gyp",
-        "version": "13.0.0",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed738541b\\node_modules\\node-gyp"
+        "version": "13.0.2",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f2eec1b8638-1\\node_modules\\node-gyp"
+      },
+      "pnpm": {
+        "from": "pnpm",
+        "version": "12.4.1",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\482c-1a09202cdb2-01564b47344207e4\\node_modules\\pnpm"
       },
       "portless": {
         "from": "portless",
-        "version": "0.14.0",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385b8b\\node_modules\\portless"
+        "version": "0.15.6",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f308796bed8-5\\node_modules\\portless"
       },
       "skills": {
         "from": "skills",
-        "version": "1.5.11",
-        "path": "C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\239c-19ed7385ac5\\node_modules\\skills"
+        "version": "1.5.26",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f2f118c3e80-2\\node_modules\\skills"
+      },
+      "tokens-cli": {
+        "from": "tokens-cli",
+        "version": "27.0.5",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f2f316dd9fc-3\\node_modules\\tokens-cli"
+      },
+      "tokscale": {
+        "from": "tokscale",
+        "version": "4.16.0",
+        "path": "\\\\?\\C:\\Users\\EDM115\\AppData\\Local\\pnpm\\global\\v11\\f88-18d59f2ec16950a0-0\\node_modules\\tokscale"
       }
     }
   }

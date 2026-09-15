@@ -1,30 +1,32 @@
 boulette v0.2.1 (https://github.com/pipelight/boulette#7cf40175):
     boulette.exe
-cargo-binstall v1.20.0:
+cargo-binstall v1.22.0:
     cargo-binstall.exe
 cargo-cache v0.8.3:
     cargo-cache.exe
-cargo-edit v0.13.11:
+cargo-edit v0.13.13:
     cargo-add.exe
     cargo-rm.exe
     cargo-set-version.exe
     cargo-upgrade.exe
 cargo-outdated v0.19.0:
     cargo-outdated.exe
-cargo-update v20.0.2:
+cargo-update v22.1.1:
     cargo-install-update-config.exe
     cargo-install-update.exe
-dprint v0.54.0:
+dprint v0.57.0:
     dprint.exe
 git-delta v0.19.2:
     delta.exe
-gitoxide v0.54.0:
+gitoxide v0.58.0:
     ein.exe
     gix.exe
 lucky_commit v2.2.5:
     lucky_commit.exe
-mergiraf v0.17.0:
+mergiraf v0.19.1:
     mergiraf.exe
+rtk v0.46.0 (https://github.com/rtk-ai/rtk?tag=v0.46.0#8dae5a75):
+    rtk.exe
 rust-stakeholder v0.1.0 (https://github.com/giacomo-b/rust-stakeholder.git#52f64ad3):
     rust-stakeholder.exe
 shell-ai v0.7.3:

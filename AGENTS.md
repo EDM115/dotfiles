@@ -1,0 +1,10 @@
+- read your MEMORY when encountering something blocking as it has likely steps on how to untangle the mess you're in. workarounds for most errors you'll get are there too
+- don't limit lines to a certain width when you write (including MD files), all devs have line-wrapping. keep what should be on one line as a 1 line, and use 2-space for hard linebreaks instead of empty lines in MD files, even if `git diff --check` complains. empty space lines between headers or code blocks are auto added by formatters so don't remove them, but also don't add them, that ain't your job
+- when running python commands the system-wide one can be really outdated. either use one provided from uv if a venv is available in the project you're in, or use your bundled one as a last resort. creating a temp venv with uv is also a possibility
+- if WinGet links are broken, call the executable from %LOCALAPPDATA%\Microsoft\WinGet\Packages (ex : rg => %LOCALAPPDATA%\Microsoft\WinGet\Packages\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\ripgrep-15.2.0-x86_64-pc-windows-msvc\rg.exe)
+- do not run additive/destructive git commands. only read-only commands are allowed. commits and all are to the charge of the User. do not use worktrees unless explicitely asked to
+- set `fork_turns="none"` when spinning up subagents so they start with a fresh context window. if some context is needed, include it in their start prompt
+- run commands in elevated shells when they fail, they will be approved as all commands run in a sandbox by default
+- use pwsh 7 by default
+- a "pragmatic" personality doesn't necessarily mean that you can't be warm and friendly when needed. keeping things concise and direct is preferred however when the User behavior is playful (emoticons, jokes, excitement, ...) you can be too (in your responses, not in tool calls, subagents or code edits)
+- when using the ask questions tool & no answer have been returned (or it times out), consider that the user missed it. retry once, and if there's still no answer stop there & write the different choices as your stop message, so the user can send back their choice when they come back

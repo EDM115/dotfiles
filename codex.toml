@@ -1,71 +1,54 @@
 windows_wsl_setup_acknowledged = true
-model = "gpt-5.5"
-model_reasoning_effort = "medium"
+model = "gpt-6-astra"
+model_reasoning_effort = "high"
+plan_mode_reasoning_effort = "xhigh"
 approvals_reviewer = "user"
 personality = "pragmatic"
 suppress_unstable_features_warning = true
-service_tier = "default"
+service_tier = "priority"
 sandbox_mode = "workspace-write"
+model_context_window = 272000
+model_auto_compact_token_limit = 270000
+model_reasoning_summary = "detailed"
+model_verbosity = "high"
+show_raw_agent_reasoning = true
 
 [sandbox_workspace_write]
 network_access = true
-
-[windows]
-sandbox = "elevated"
-[agents]
-max_threads = 6
-max_depth = 2
-
-[marketplaces.openai-bundled]
-last_updated = "2026-06-17T18:21:26Z"
-source_type = "local"
-source = '\\?\C:\Users\EDM115\.codex\.tmp\bundled-marketplaces\openai-bundled'
-
-[marketplaces.openai-primary-runtime]
-last_updated = "2026-06-03T08:29:02Z"
-source_type = "local"
-source = '\\?\C:\Users\EDM115\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
-
-[plugins."documents@openai-primary-runtime"]
-enabled = true
-
-[plugins."spreadsheets@openai-primary-runtime"]
-enabled = true
-
-[plugins."presentations@openai-primary-runtime"]
-enabled = true
-
-[plugins."github@openai-curated"]
-enabled = true
-
-[plugins."atlassian-rovo@openai-curated"]
-enabled = true
-
-[plugins."codex-security@openai-curated"]
-enabled = true
-
-[plugins."browser@openai-bundled"]
-enabled = true
 
 [tui]
 terminal_title = ["activity", "project-name", "current-dir", "run-state", "context-remaining", "total-input-tokens", "total-output-tokens", "task-progress"]
 theme = "dracula"
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "pull-request-number", "branch-changes", "run-state", "context-window-size", "used-tokens", "task-progress"]
 status_line_use_colors = true
+session_picker_view = "dense"
 
 [tui.model_availability_nux]
-"gpt-5.5" = 4
+"gpt-5.6-sol" = 2
+gpt-6-astra = 1
+
+[agents]
+max_threads = 8
+max_depth = 2
+
+[windows]
+sandbox = "elevated"
 
 [features]
+external_migration = true
 memories = true
 hooks = true
 apps = true
-external_migration = true
+mentions_v2 = true
 prevent_idle_sleep = true
 terminal_resize_reflow = true
-network_proxy = true
-mentions_v2 = true
 js_repl = false
+default_mode_request_user_input = true
+context_management.experimental_mode = false
+
+[features.multi_agent_v2]
+hide_spawn_agent_metadata = false
+tool_namespace = "agents"
 
 [desktop]
 ambient-suggestions-enabled = true
@@ -80,25 +63,116 @@ git-create-pull-request-as-draft = true
 git-pull-request-merge-method = "squash"
 git-show-sidebar-pr-icons = true
 conversationDetailMode = "STEPS_COMMANDS"
-composerEnterBehavior = "cmdIfMultiline"
+composerEnterBehavior = "cmdAlways"
 hotkey-window-projectless-default-enabled = true
-reduced-motion-preference = "system"
+reduced-motion-preference = "off"
 keepRemoteControlAwakeWhilePluggedIn = true
 show-context-window-usage = true
-appearanceDiffMarkerStyle = "color"
+git-commit-instructions = """
+follow Conventionnal Commits guidelines
+- `<type>(<scope>): <short description>`
+- scope examples: `ui`, `deps`, `docs`, `ci`
+- optional body with bullet points for details
+- check git history for style examples"""
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
+show-ultra-in-model-picker-slider = true
+composerPlainTextMode = true
+external-agent-import-sync-enabled = true
+worktree-upstream-refresh-mode = "best-effort"
+toys-confetti-enabled = true
+open-link-in-target-preference = "external-browser"
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#ffb86c"
-contrast = 60
+contrast = 75
 ink = "#eae7de"
-opaqueWindows = false
+opaqueWindows = true
 surface = "#00040e"
 
 [desktop.appearanceDarkChromeTheme.fonts]
 code = '"FiraCode Nerd Font Propo"'
+content = '"Inter Variable Text"'
 ui = "Satoshi"
 
 [desktop.appearanceDarkChromeTheme.semanticColors]
 diffAdded = "#50fa7b"
 diffRemoved = "#ff5555"
 skill = "#bd93f9"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = '\\?\C:\Users\lu.lederrey\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = '\\?\C:\Users\lu.lederrey\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[marketplaces.wakatime]
+last_updated = "2026-06-29T06:43:49Z"
+last_revision = "a0218436d549915c521287b9436782891e75e856"
+source_type = "git"
+source = "https://github.com/wakatime/codex-cli-wakatime.git"
+
+[marketplaces.edm115]
+last_updated = "2026-08-04T10:06:37Z"
+last_revision = "43f42086b1fa7afb804e26d6eb7c94938dfc8e35"
+source_type = "git"
+source = "https://github.com/EDM115/thoughts.git"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."codex-security@openai-curated"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."codex-cli-wakatime@wakatime"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."thoughts@edm115"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[apps.connector_openai_botmail]
+enabled = false
+
+[apps.connector_openai_codex_document_control]
+enabled = false
+
+[memories]
+generate_memories = true
+use_memories = true

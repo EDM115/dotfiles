@@ -28,7 +28,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
@@ -52,6 +52,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "accessibility.chat.showCheckmarks": true,
+  "agents.voice.liveTranscript": true,
+  "agents.voice.showTranscript": true,
+  "agents.voice.speakResponses": false,
+  "agents.voice.voice": "harper_neutral",
   "better-comments.fullHighlight": true,
   "chat.agent.maxRequests": 100,
   "chat.agent.thinking.collapsedTools": "withThinking",
@@ -336,7 +340,19 @@
     ]
   },
   "chat.agent.thinkingStyle": "collapsedPreview",
+  "chat.agentHost.agentDebugLog.enabled": true,
+  "chat.agentHost.codexAgent.enabled": true,
+  "chat.agentHost.copilot.toolSearch.enabled": true,
+  "chat.agentHost.customTerminalTool.enabled": true,
+  "chat.agentHost.opus48Prompt.enabled": true,
+  "chat.agentHost.otel.dbSpanExporter.enabled": true,
+  "chat.agentHost.otel.enabled": true,
+  "chat.agentHost.sdkSandbox.enabled": "allowNetwork",
+  "chat.agentsControl.enabled": "hidden",
+  "chat.agentSessions.showExternal": "last7Days",
+  "chat.autopilot.advanced.enabled": true,
   "chat.checkpoints.showFileChanges": true,
+  "chat.customizations.promptMigration.enabled": true,
   "chat.detectParticipant.enabled": true,
   "chat.editing.explainChanges.enabled": true,
   "chat.editor.wordWrap": "on",
@@ -365,7 +381,8 @@
   ],
   "chat.sessionSync.enabled": true,
   "chat.subagents.allowInvocationsFromSubagents": true,
-  "chat.tips.enabled": true,
+  "chat.tips.enabled": false,
+  "chat.titleBar.openInAgentsWindow.enabled": false,
   "chat.tools.compressOutput.enabled": true,
   "chat.tools.terminal.preventShellHistory": false,
   "chat.tools.urls.autoApprove": {
@@ -382,7 +399,7 @@
   "chat.useCustomAgentHooks": true,
   "chat.useNestedAgentsMdFiles": true,
   "chat.viewSessions.orientation": "stacked",
-  "chatgpt.composerEnterBehavior": "cmdIfMultiline",
+  "chatgpt.composerEnterBehavior": "cmdAlways",
   "chatgpt.followUpQueueMode": "steer",
   "containers.contexts.showInStatusBar": true,
   "css.lint.unknownAtRules": "ignore",
@@ -480,6 +497,7 @@
   "github.copilot.chat.copilotMemory.enabled": true,
   "github.copilot.chat.executionSubagent.enabled": true,
   "github.copilot.chat.githubMcpServer.enabled": true,
+  "github.copilot.chat.gpt56Verbosity.enabled": false,
   "github.copilot.chat.languageContext.fix.typescript.enabled": true,
   "github.copilot.chat.languageContext.inline.typescript.enabled": true,
   "github.copilot.chat.languageContext.typescript.enabled": true,
@@ -509,6 +527,7 @@
   "githubPullRequests.experimental.chat": true,
   "githubPullRequests.pullBranch": "never",
   "gitmoji.showEmojiCode": true,
+  "go.toolsManagement.autoUpdate": true,
   "gradle.showStoppedDaemons": true,
   "gremlins.color_error": "rgba(255, 85, 85, .50)",
   "gremlins.color_info": "rgba(139, 233, 253, .50)",
@@ -662,6 +681,7 @@
   "security.workspace.trust.banner": "always",
   "security.workspace.trust.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
+  "sessions.changes.openSingleFileDiff": true,
   "styled-colors.decoration_type": "background",
   "task.allowAutomaticTasks": "off",
   "task.notifyWindowOnTaskCompletion": 0,
@@ -784,17 +804,20 @@
   "window.newWindowProfile": "Default",
   "window.titleBarStyle": "custom",
   "workbench.browser.enableChatTools": true,
+  "workbench.browser.enableRemoteProxy": true,
+  "workbench.browser.experimentalUserTools.enabled": true,
   "workbench.browser.openLocalhostLinks": true,
+  "workbench.browser.searchEngine": "google",
   "workbench.browser.showInTitleBar": true,
   "workbench.colorTheme": "Dracula Pro (Van Helsing)",
   "workbench.editor.alwaysShowEditorActions": true,
   "workbench.editor.empty.hint": "hidden",
+  "workbench.editor.highlightModifiedTabs": true,
   "workbench.editorAssociations": {
     "{git,gitlens,git-graph}:/**/*.{md,csv,svg}": "default",
     "{git,gitlens}:/**/*.{md,csv}": "default",
     "*.copilotmd": "vscode.markdown.preview.editor",
     "*.md": "default",
-    "*.pdf": "pdf.preview",
     "*.pyc": "default"
   },
   "workbench.iconTheme": "vscode-icons",
@@ -807,6 +830,14 @@
   "xml.format.emptyElements": "collapse",
   "xml.format.enforceQuoteStyle": "preferred",
   "xml.format.maxLineWidth": 0,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
   "yaml.extension.recommendations": false,
   "yaml.maxItemsComputed": 100000
 }

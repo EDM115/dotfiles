@@ -39,6 +39,7 @@ Files :
 Files :
 - [`.gitconfig`](.gitconfig) : Git configuration file
 - [`.skill-lock.json`](.skill-lock.json) : List of installed skills (`~/.agents`), uses the [skills CLI](https://npmx.dev/package/skills)
+- [`AGENTS.md`](AGENTS.md) : Codex global instructions
 - [`codex.toml`](codex.toml) : Codex configuration file (`~/.codex/config.toml`)
 - [`gh-extensions.txt`](gh-extensions.txt) : List of extensions for the GH CLI (`gh extension list > gh-extensions.txt`)
 - [`Microsoft.PowerShell_profile.ps1`](Microsoft.PowerShell_profile.ps1) : PowerShell profile. Includes : Oh My Posh, Terminal-Icons, Github Copilot, hcloud, [sudo-like](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed) and more
@@ -51,4 +52,3 @@ Files :
 
 Folders :
 - [`omp/`](omp/) : Oh My Posh themes ([source](https://github.com/EDM115/EDM115-ohmyposh-theme))
-- [`spicetify/`](spicetify/) : Spicetify config, themes and extensions, as well as a marketplace backup

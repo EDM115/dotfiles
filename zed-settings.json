@@ -1,9 +1,92 @@
 {
   "agent": {
-    "default_profile": "minimal",
+    "default_model": {
+      "effort": "low",
+      "enable_thinking": true,
+      "model": "gpt-5.6-sol",
+      "provider": "openai-subscribed"
+    },
+    "default_profile": "write",
     "dock": "right",
+    "expand_edit_card": false,
+    "expand_terminal_card": false,
+    "favorite_models": [],
     "message_editor_min_lines": 3,
     "model_parameters": [],
+    "profiles": {
+      "write": {
+        "context_servers": {
+          "github": {
+            "tools": {
+              "add_comment_to_pending_review": false,
+              "add_issue_comment": false,
+              "add_reply_to_pull_request_comment": false,
+              "assign_copilot_to_issue": false,
+              "create_branch": false,
+              "create_or_update_file": false,
+              "create_pull_request": false,
+              "create_pull_request_with_copilot": false,
+              "create_repository": false,
+              "delete_file": false,
+              "fork_repository": false,
+              "get_copilot_job_status": false,
+              "get_tag": true,
+              "get_team_members": false,
+              "get_teams": false,
+              "issue_write": false,
+              "list_issue_fields": false,
+              "list_issue_types": false,
+              "list_repository_collaborators": false,
+              "list_tags": false,
+              "merge_pull_request": false,
+              "pull_request_review_write": false,
+              "push_files": false,
+              "request_copilot_review": false,
+              "run_secret_scanning": false,
+              "sub_issue_write": false,
+              "update_pull_request": false,
+              "update_pull_request_branch": false
+            }
+          },
+          "mcp-server-context7": {
+            "tools": {
+              "query-docs": false,
+              "resolve-library-id": false
+            }
+          }
+        },
+        "enable_all_context_servers": true,
+        "name": "Write",
+        "tools": {
+          "apply_code_action": true,
+          "copy_path": true,
+          "create_directory": true,
+          "create_thread": true,
+          "delete_path": true,
+          "diagnostics": true,
+          "edit_file": true,
+          "fetch": true,
+          "find_path": true,
+          "find_references": true,
+          "get_code_actions": true,
+          "go_to_definition": true,
+          "grep": true,
+          "list_agents_and_models": true,
+          "list_directory": true,
+          "move_path": true,
+          "read_file": true,
+          "rename_symbol": true,
+          "search_web": true,
+          "skill": true,
+          "spawn_agent": true,
+          "terminal": true,
+          "write_file": true
+        }
+      }
+    },
+    "sandbox_permissions": {
+      "allow_all_hosts": true
+    },
     "show_turn_stats": true,
     "sidebar_side": "right",
     "tool_permissions": {
@@ -26,6 +109,15 @@
               "pattern": "^tail\\b"
             },
             {
+              "pattern": "^uv run ruff\\b"
+            },
+            {
+              "pattern": "^uv run ty\\b"
+            },
+            {
+              "pattern": "^uv run pytest\\b"
+            },
+            {
               "pattern": "^echo\\s+===(\\s|$)"
             }
           ]
@@ -36,6 +128,14 @@
   },
   "agent_servers": {
     "claude-acp": {
+      "type": "registry"
+    },
+    "cline": {
+      "default_config_options": {
+        "auto_approve": true,
+        "model": "cline-pass/deepseek-v4-flash",
+        "provider": "cline-pass"
+      },
       "type": "registry"
     },
     "codex-acp": {
@@ -68,6 +168,7 @@
   "base_keymap": "VSCode",
   "buffer_font_family": "Fira Code",
   "buffer_font_size": 14.0,
+  "cli_default_open_behavior": "existing_window",
   "context_servers": {
     "github": {
       "enabled": true,
@@ -83,6 +184,7 @@
       "enabled": true
     }
   },
+  "diff_view_style": "split",
   "edit_predictions": {
     "allow_data_collection": "yes"
   },
@@ -103,32 +205,57 @@
   },
   "format_on_save": "off",
   "git": {
+    "file_diff": {
+      "show_full_file": false
+    },
     "inline_blame": {
-      "enabled": true
+      "enabled": true,
+      "location": "status_bar"
     }
   },
   "git_panel": {
     "collapse_untracked_diff": true,
     "dock": "left",
+    "entry_primary_click_action": "file_diff",
     "fallback_branch_name": "master",
     "file_icons": true,
+    "group_by": "staging",
     "show_count_badge": true,
     "tree_view": true
   },
   "hide_mouse": "never",
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "VSCode Icons for Zed (Dark)",
   "inlay_hints": {
     "enabled": true,
     "show_background": false
   },
   "languages": {
     "C++": {
-      "remove_trailing_whitespace_on_save": false
+      "remove_trailing_whitespace_on_save": false,
+      "tab_size": 4
+    },
+    "Git Commit": {
+      "preferred_line_length": 500,
+      "wrap_guides": [
+        50,
+        72
+      ]
     },
     "Python": {
       "language_servers": [
-        "basedpyright",
+        "!basedpyright",
         "ty"
+      ],
+      "tab_size": 4
+    },
+    "TypeScript": {
+      "inlay_hints": {
+        "enabled": false
+      },
+      "language_servers": [
+        "typescript-ls",
+        "vtsls",
+        "!typescript-language-server"
       ]
     }
   },
@@ -138,10 +265,15 @@
     "clangd": {
       "initialization_options": {
         "fallbackFlags": [
+          "--target=x86_64-pc-windows-msvc",
+          "-std=c++20",
+          "-DWINVER=0x0A00",
+          "-D_WIN32_WINNT=0x0A00",
+          "-DUNICODE",
+          "-D_UNICODE",
           "-Iinclude",
           "-Isrc",
-          "-ID:/EDM115/Programmes/Windhawk/Compiler/include",
-          "-std=c++20"
+          "-ID:/EDM115/Programmes/Windhawk/Compiler/include"
         ]
       }
     },
@@ -188,10 +320,12 @@
     "hide_root": true,
     "scrollbar": {
       "horizontal_scroll": true
-    }
+    },
+    "starts_open": true
   },
-  "redact_private_values": true,
+  "redact_private_values": false,
   "remove_trailing_whitespace_on_save": false,
+  "reveal_if_open": true,
   "session": {
     "trust_all_worktrees": true
   },
@@ -211,8 +345,10 @@
     "copy_on_select": true,
     "cursor_shape": "underline",
     "env": {},
+    "flexible": true,
     "font_family": "FiraCode Nerd Font Propo",
-    "max_scroll_history_lines": 100000,
+    "max_scroll_history_lines": 1000000,
+    "shell": "system",
     "show_count_badge": true
   },
   "theme": "Dracula Pro (Van Helsing)",
